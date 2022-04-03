@@ -14,6 +14,6 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
       - name: Build source
-        run: 'javac HospitalAppointmentSystem.java'
+        run: 'javac Driver.java'
       - name: Run
-        run: 'java HospitalAppointmentSystem'
+        run: 'java Driver'
