@@ -1,15 +1,15 @@
 package model;
 
 class Doctor {
-    private String id;
+    private DoctorId id;
     private String name;
 
     Doctor(String id, String name) {
-        this.id = id;
+        this.id = new DoctorId(id);
         this.name = name;
     }
 
-    String getId() {
+    DoctorId getId() {
         return id;
     }
 
@@ -47,6 +47,39 @@ class Doctor {
     public String toString() {
         String output = String.format("");
 
+        return output;
+    }
+}
+
+class DoctorId {
+    String id;
+
+    DoctorId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other.getClass() != this.getClass()) {
+            return false;
+        }
+
+        DoctorId otherDoctorId = (DoctorId) other;
+        if (otherDoctorId.id.equals(this.id)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        String output = String.format("PatientID obj: %s", id);
         return output;
     }
 }
