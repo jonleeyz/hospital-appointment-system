@@ -11,7 +11,7 @@ class Appointment {
     private LocalTime time;
     private int duration;
 
-    Appointment(PatientId patientId, DoctorId doctorId, String date, String time) {
+    protected Appointment(PatientId patientId, DoctorId doctorId, String date, String time) {
         this.patientId = patientId;
         this.doctorId = doctorId;
         // need to update
@@ -20,27 +20,27 @@ class Appointment {
         this.duration = 60;
     }
 
-    AppointmentId getAppointmentId() {
+    protected AppointmentId getAppointmentId() {
         return appointmentId;
     }
 
-    PatientId getPatientId() {
+    protected PatientId getPatientId() {
         return patientId;
     }
 
-    DoctorId getDoctorId() {
+    protected DoctorId getDoctorId() {
         return doctorId;
     }
 
-    LocalDate getDate() {
+    protected LocalDate getDate() {
         return date;
     }
 
-    LocalTime getTime() {
+    protected LocalTime getTime() {
         return time;
     }
 
-    int getDuration() {
+    protected int getDuration() {
         return duration;
     }
 
@@ -81,39 +81,6 @@ class Appointment {
     public String toString() {
         String output = String.format("");
 
-        return output;
-    }
-}
-
-class AppointmentId {
-    String id;
-
-    AppointmentId(String id) {
-        this.id = id;
-    }
-    
-    @Override
-    public boolean equals(Object other) {
-        if (other.getClass() != this.getClass()) {
-            return false;
-        }
-
-        AppointmentId otherAppointmentId = (AppointmentId) other;
-        if (otherAppointmentId.id.equals(this.id)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        String output = String.format("PatientID obj: %s", id);
         return output;
     }
 }

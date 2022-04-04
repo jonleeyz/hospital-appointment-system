@@ -15,7 +15,7 @@ class Patient {
     private int age;
     private Gender gender;
 
-    Patient(String id, String name, int age, String gender) {
+    protected Patient(String id, String name, int age, String gender) {
         this.id = new PatientId(id);
         this.name = name;
         this.age = age;
@@ -30,19 +30,19 @@ class Patient {
         }
     }
 
-    PatientId getId() {
+    protected PatientId getId() {
         return id;
     }
 
-    String getName() {
+    protected String getName() {
         return name;
     }
 
-    int getAge() {
+    protected int getAge() {
         return age;
     }
 
-    Gender getGender() {
+    protected Gender getGender() {
         return gender;
 
         /*
@@ -92,39 +92,6 @@ class Patient {
     public String toString() {
         String output = String.format("");
 
-        return output;
-    }
-}
-
-class PatientId {
-    String id;
-
-    PatientId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other.getClass() != this.getClass()) {
-            return false;
-        }
-
-        PatientId otherPatientId = (PatientId) other;
-        if (otherPatientId.id.equals(this.id)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        String output = String.format("PatientID obj: %s", id);
         return output;
     }
 }

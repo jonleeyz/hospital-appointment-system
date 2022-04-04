@@ -4,16 +4,16 @@ class Doctor {
     private DoctorId id;
     private String name;
 
-    Doctor(String id, String name) {
+    protected Doctor(String id, String name) {
         this.id = new DoctorId(id);
         this.name = name;
     }
 
-    DoctorId getId() {
+    protected DoctorId getId() {
         return id;
     }
 
-    String getName() {
+    protected String getName() {
         return name;
     }
 
@@ -47,39 +47,6 @@ class Doctor {
     public String toString() {
         String output = String.format("");
 
-        return output;
-    }
-}
-
-class DoctorId {
-    String id;
-
-    DoctorId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other.getClass() != this.getClass()) {
-            return false;
-        }
-
-        DoctorId otherDoctorId = (DoctorId) other;
-        if (otherDoctorId.id.equals(this.id)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        String output = String.format("PatientID obj: %s", id);
         return output;
     }
 }
