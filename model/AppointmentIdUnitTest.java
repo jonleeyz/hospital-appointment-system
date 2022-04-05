@@ -1,5 +1,5 @@
 package model;
 
-public class AppointmentIdUnitTest {
+class AppointmentIdUnitTest {
     
 }
