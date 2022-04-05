@@ -16,12 +16,12 @@ jobs:
       - name: Create temporary output folder
         run: 'mkdir out'
       - name: Build source
-        run: 'javac -d out Driver.java'
-      - name: Build test suite
+        run: 'javac -d out Driver.java -verbose'
+      - name: Build unit test suites
         run: 'javac -d out -cp test/dependencies/junit-platform-console-standalone-1.8.2.jar
-              model/DoctorIdUnitTest.java'
-      - name: Run test suite
+              model/DoctorIdUnitTest.java -verbose'
+      - name: Run unit test suites
         run: 'java -jar test/dependencies/junit-platform-console-standalone-1.8.2.jar -cp out
-              --scan-classpath --details=summary --fail-if-no-tests --reports-dir="test/reports"'
+              --scan-classpath --details=tree --fail-if-no-tests --reports-dir="test/reports"'
       - name: Run source
         run: 'java -cp out Driver'
