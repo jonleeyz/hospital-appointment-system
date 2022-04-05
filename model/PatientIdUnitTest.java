@@ -1,9 +1,9 @@
 package model;
 
-import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PatientIdUnitTest {
@@ -24,7 +24,7 @@ class PatientIdUnitTest {
      * - Nevertheless, to faciliate TDD, test will be left in place in case PatientId implementation changes.
      */
     @Test
-    void ConstructorTest() {
+    void constructorTest() {
         assertEquals(patientId1.id, "x");
 
         PatientId patientIdBlank = new PatientId("");
@@ -32,7 +32,7 @@ class PatientIdUnitTest {
     }
 
     @Test
-    void EqualsOverrideTest() {
+    void equalsOverrideTest() {
         PatientId patientId2 = new PatientId(x);
         Object patientId3 = new PatientId(x);
         PatientId patientId4 = new PatientId(y);
