@@ -13,7 +13,15 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
+      - name: Create temporary output folder
+        run: 'mkdir out'
       - name: Build source
-        run: 'javac Driver.java'
-      - name: Run
-        run: 'java Driver'
+        run: 'javac -d out Driver.java'
+      - name: Build test suite
+        run: 'javac -d out -cp test/dependencies/junit-platform-console-standalone-1.8.2.jar
+              model/DoctorIdUnitTest.java'
+      - name: Run test suite
+        run: 'java -jar test/dependencies/junit-platform-console-standalone-1.8.2.jar -cp out
+              --scan-classpath --details=summary --fail-if-no-tests --reports-dir="test/reports"'
+      - name: Run source
+        run: 'java -cp out Driver'
