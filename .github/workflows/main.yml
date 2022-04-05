@@ -23,5 +23,10 @@ jobs:
       - name: Run unit test suites
         run: 'java -jar test/dependencies/junit-platform-console-standalone-1.8.2.jar -cp out
               --scan-classpath --details=tree --fail-if-no-tests --reports-dir="test/reports"'
+      - name: Publish test reports
+        uses: mikepenz/action-junit-report@v3
+        if: always()
+        with:
+          report_paths: 'test/reports/TEST-*.xml'
       - name: Run source
         run: 'java -cp out Driver'
