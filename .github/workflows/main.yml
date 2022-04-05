@@ -18,8 +18,8 @@ jobs:
       - name: Build source
         run: 'javac -d out Driver.java -verbose'
       - name: Build unit test suites
-        run: 'javac -d out -cp test/dependencies/junit-platform-console-standalone-1.8.2.jar
-              model/DoctorIdUnitTest.java -verbose'
+        run: 'javac -d out -cp "out:test/dependencies/junit-platform-console-standalone-1.8.2.jar"
+              model/*UnitTest.java -verbose'
       - name: Run unit test suites
         run: 'java -jar test/dependencies/junit-platform-console-standalone-1.8.2.jar -cp out
               --scan-classpath --details=tree --fail-if-no-tests --reports-dir="test/reports"'
