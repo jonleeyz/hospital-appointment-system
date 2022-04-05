@@ -24,4 +24,4 @@ jobs:
         run: 'java -jar test/dependencies/junit-platform-console-standalone-1.8.2.jar -cp out
               --scan-classpath --details=summary --fail-if-no-tests --reports-dir="test/reports"'
       - name: Run source
-        run: 'java Driver'
+        run: 'java -cp out Driver'
