@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "test/dependencies/junit-platform-console-standalone-1.8.2.jar"
+    ]
+}
