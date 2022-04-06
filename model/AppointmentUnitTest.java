@@ -32,30 +32,37 @@ class AppointmentUnitTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "32032018", "00032018", "29022018", "31042018", "08132018", "08002018" })
-    void constructorFailsCorrectlyOnInvalidDateTest(String invalidDate) {
-        assertThrows(DateTimeException.class,
-                     () -> new Appointment(appointment1Id, patient1Id, doctor1Id, invalidDate, time1Raw));
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = { "", "random string", "08/03/2018", "080318", "8 Jul 2018", "8 July 2018" })
-    void constructorFailsCorrectlyOnUnparseableDateTest(String unparseableDate) {
+    @ValueSource(strings = { "32032018", "00032018", "08132018", "08002018" })
+    void constructorFailsCorrectlyOnInvalidlyFormattedDateTest(String unparseableDate) {
         assertThrows(DateTimeException.class,
                      () -> new Appointment(appointment1Id, patient1Id, doctor1Id, unparseableDate, time1Raw));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "09:60:00", "09:00:60", "24:01:00", "25:00:00" })
-    void constructorFailsCorrectlyOnInvalidTimeTest(String invalidTime) {
+    @ValueSource(strings = { "", "random string", "08/03/2018", "080318", "8 Jul 2018", "8 July 2018" })
+    void constructorFailsCorrectlyOnUnparseableStringDateTest(String unparseableDate) {
         assertThrows(DateTimeException.class,
-                     () -> new Appointment(appointment1Id, patient1Id, doctor1Id, date1Raw, invalidTime));
+                     () -> new Appointment(appointment1Id, patient1Id, doctor1Id, unparseableDate, time1Raw));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "29022018", "30022020", "31042018", "31112018" })
+    void constructorFailsCorrectlyOnParseableButInvalidDateTest(String invalidDate) {
+        assertThrows(IllegalArgumentException.class,
+                     () -> new Appointment(appointment1Id, patient1Id, doctor1Id, invalidDate, time1Raw));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "09:60:00", "09:00:60", "24:01:00", "25:00:00" })
+    void constructorFailsCorrectlyOnInvalidlyFormattedTimeTest(String unparseableTime) {
+        assertThrows(DateTimeException.class,
+                     () -> new Appointment(appointment1Id, patient1Id, doctor1Id, date1Raw, unparseableTime));
     }
 
     @ParameterizedTest
     @ValueSource(strings = { "", "random string", "09.00.00", "09,00,00", "09 00 00", "09:00", "09.00", "9 pm",
                              "9.00 pm", "9:00 pm", "009:00:00" })
-    void constructorFailsCorrectlyOnUnparseableTimeTest(String unparseableTime) {
+    void constructorFailsCorrectlyOnUnparseableStringTimeTest(String unparseableTime) {
         assertThrows(DateTimeException.class,
                      () -> new Appointment(appointment1Id, patient1Id, doctor1Id, date1Raw, unparseableTime));
     }
