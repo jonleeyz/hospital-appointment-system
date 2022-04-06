@@ -19,6 +19,11 @@ class Patient {
         this.id = new PatientId(id);
         this.name = name;
         this.age = age;
+
+        if (age < 0) {
+            throw new IllegalArgumentException(String.format("Specified age [%d] cannot be negative.", age));
+        }
+        // extension: add check for whole numbers; might need to implement at parser level.
         
         if (gender == "M") {
             this.gender = Gender.M;
@@ -26,7 +31,7 @@ class Patient {
             this.gender = Gender.F;
         } else {
             throw new IllegalArgumentException(
-                String.format("No gender implementation for specified gender: %s.", gender));
+                String.format("Missing implementation for specified gender: %s.", gender));
         }
     }
 
