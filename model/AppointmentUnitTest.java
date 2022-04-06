@@ -34,38 +34,30 @@ class AppointmentUnitTest {
     @ParameterizedTest
     @ValueSource(strings = { "32032018", "00032018", "29022018", "31042018", "08132018", "08002018" })
     void constructorFailsCorrectlyOnInvalidDateTest(String invalidDate) {
-        Exception e = assertThrows(DateTimeException.class,
-                                   () -> new Appointment(appointment1Id, patient1Id, doctor1Id, invalidDate,
-                                                         time1Raw));
-        assertEquals(String.format(""), e.getMessage());
+        assertThrows(DateTimeException.class,
+                     () -> new Appointment(appointment1Id, patient1Id, doctor1Id, invalidDate, time1Raw));
     }
 
     @ParameterizedTest
     @ValueSource(strings = { "", "random string", "08/03/2018", "080318", "8 Jul 2018", "8 July 2018" })
     void constructorFailsCorrectlyOnUnparseableDateTest(String unparseableDate) {
-        Exception e = assertThrows(DateTimeException.class,
-                                   () -> new Appointment(appointment1Id, patient1Id, doctor1Id, unparseableDate,
-                                                         time1Raw));
-        assertEquals(String.format(""), e.getMessage());
+        assertThrows(DateTimeException.class,
+                     () -> new Appointment(appointment1Id, patient1Id, doctor1Id, unparseableDate, time1Raw));
     }
 
     @ParameterizedTest
     @ValueSource(strings = { "09:60:00", "09:00:60", "24:00:00" })
     void constructorFailsCorrectlyOnInvalidTimeTest(String invalidTime) {
-        Exception e = assertThrows(DateTimeException.class,
-                                   () -> new Appointment(appointment1Id, patient1Id, doctor1Id, date1Raw,
-                                                         invalidTime));
-        assertEquals(String.format(""), e.getMessage());
+        assertThrows(DateTimeException.class,
+                     () -> new Appointment(appointment1Id, patient1Id, doctor1Id, date1Raw, invalidTime));
     }
 
     @ParameterizedTest
     @ValueSource(strings = { "", "random string", "09.00.00", "09,00,00", "09 00 00", "09:00", "09.00", "9 pm",
                              "9.00 pm", "9:00 pm", "009:00:00" })
     void constructorFailsCorrectlyOnUnparseableTimeTest(String unparseableTime) {
-        Exception e = assertThrows(DateTimeException.class,
-                                   () -> new Appointment(appointment1Id, patient1Id, doctor1Id, date1Raw,
-                                                         unparseableTime));
-        assertEquals(String.format(""), e.getMessage());
+        assertThrows(DateTimeException.class,
+                     () -> new Appointment(appointment1Id, patient1Id, doctor1Id, date1Raw, unparseableTime));
     }
 
     @Test
