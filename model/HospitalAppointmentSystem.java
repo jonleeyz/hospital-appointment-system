@@ -14,6 +14,9 @@ public class HospitalAppointmentSystem {
     HashMap<DoctorId, Doctor> doctorTable = new HashMap<DoctorId, Doctor>();
     HashMap<PatientId, Patient> patientTable = new HashMap<PatientId, Patient>();
     HashMap<AppointmentId, Appointment> appointmentTable = new HashMap<AppointmentId, Appointment>();
+    private static final String[] CONFIGURED_HEADER = {"doctor_id", "doctor_name",
+                                                       "patient_id", "patient_name", "patient_age", "patient_gender",
+                                                       "appointment_id", "appointment_datetime"};
     
     HashMap<DoctorId, AppointmentId> doctorIndexedAppointmentTable = new HashMap<DoctorId, AppointmentId>();
     HashMap<PatientId, AppointmentId> patientIndexedAppointmentTable = new HashMap<PatientId, AppointmentId>();
@@ -73,5 +76,15 @@ public class HospitalAppointmentSystem {
             //TODO: handle
         }
         return data;
+    }
+
+    private void verifyCsvSchema(List<String> header) {
+        int configuredHeaderIndex = 0;
+        for (String s: header) {
+            String field = s.trim();
+            if (!(field.equals(CONFIGURED_HEADER[configuredHeaderIndex++]))) {
+                throw new IllegalArgumentException();
+            }
+        }
     }
 }
