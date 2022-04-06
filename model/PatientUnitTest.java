@@ -4,27 +4,17 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PatientUnitTest {
-    private String patient1IdRaw;
-    private String patient1Name;
-    private int patient1Age;
-    private String patient1GenderRaw;
-    private Patient patient1;
-    
-    @BeforeEach
-    void init() {
-        patient1IdRaw = "P1";
-        patient1Name = "Felicia Tan";
-        patient1Age = 25;
-        patient1GenderRaw = "F";
-        patient1 = new Patient(patient1IdRaw, patient1Name, patient1Age, patient1GenderRaw);
-    }
+    private final String patient1IdRaw = "P1";
+    private final String patient1Name = "Felicia Tan";
+    private final int patient1Age = 25;
+    private final String patient1GenderRaw = "F";
+    private final Patient patient1 = new Patient(patient1IdRaw, patient1Name, patient1Age, patient1GenderRaw);
 
     @Test
-    void constructorTest() {
+    void constructorWorksCorrectlyTest() {
         PatientId patient1Id = new PatientId(patient1IdRaw);
         Patient.Gender patient1Gender = Patient.Gender.F;
         assertEquals(patient1.getId(), patient1Id);
@@ -46,7 +36,7 @@ class PatientUnitTest {
     }
 
     @Test
-    void equalsOverrideTest() {
+    void equalsOverrideWorksCorrectlyTest() {
         String patient2IdRaw = "V3";
         String patient2Name = "Hugo Lloris";
         int patient2Age = 71;
