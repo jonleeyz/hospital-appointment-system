@@ -20,7 +20,7 @@ class Appointment {
     private int duration;
 
     protected Appointment(AppointmentId appointmentId, PatientId patientId, DoctorId doctorId,
-                          String date, String time) {
+                          String date, String time) throws IllegalArgumentException {
         this.appointmentId = appointmentId;
         this.patientId = patientId;
         this.doctorId = doctorId;
