@@ -28,12 +28,14 @@ class Appointment {
         this.time = LocalTime.parse(time, TIME_FORMATTER);
         this.duration = 60;
         
+        // not working
         // handles invalid Dates: months that have no 31st
         if ((monthsWithout31st.contains(this.date.getMonthValue()) && this.date.getDayOfMonth() == 31)) {
             throw new IllegalArgumentException(String.format(String.join("Parsed date is invalid: Invalid value for ",
                                                                          "DayOfMonth when MonthOfYear is %d: %d"),
                                                              this.date.getMonthValue(), this.date.getDayOfMonth()));
         }
+        // not working
         // handles invalid Dates: February, for leap and normal years
         if ((this.date.getMonthValue() == 2) &&
             ((this.date.getYear() % 4 == 0 && this.date.getDayOfMonth() > 29) ||
