@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PatientUnitTest {
     private final String patient1IdRaw = "P1";
@@ -21,18 +23,38 @@ class PatientUnitTest {
         assertEquals(patient1.getName(), patient1Name);
         assertEquals(patient1.getAge(), patient1Age);
         assertEquals(patient1.getGender(), patient1Gender);
+    }
 
-        int invalidPatientAge = -1;
-        Exception ageException = assertThrows(IllegalArgumentException.class,
-                                              () -> new Patient(patient1IdRaw, patient1Name,
-                                                                invalidPatientAge, patient1GenderRaw));
-        assertEquals("Specified age [-1] cannot be negative.", ageException.getMessage());
+    @ParameterizedTest
+    @ValueSource(ints = { -1, -2 })
+    void constructorFailsCorrectlyOnInvalidAgeTest(int invalidPatientAge) {
+        Exception e = assertThrows(IllegalArgumentException.class,
+                                   () -> new Patient(patient1IdRaw, patient1Name,
+                                                     invalidPatientAge, patient1GenderRaw));
+        assertEquals(String.format("Specified age [%d] cannot be negative.", invalidPatientAge),
+                     e.getMessage());
+    }
 
-        String invalidPatientGenderRaw = "X";
-        Exception genderException = assertThrows(IllegalArgumentException.class,
-                                                 () -> new Patient(patient1IdRaw, patient1Name,
-                                                                   patient1Age, invalidPatientGenderRaw));
-        assertEquals("Missing implementation for specified gender: X.", genderException.getMessage());
+    @ParameterizedTest
+    @ValueSource(strings = { "f", "m", "female", "male" })
+    void constructorFailsCorrectlyOnInvalidFormatGenderTest(String invalidPatientGenderRaw) {
+        Exception e = assertThrows(IllegalArgumentException.class,
+                                   () -> new Patient(patient1IdRaw, patient1Name,
+                                                     patient1Age, invalidPatientGenderRaw));
+        assertEquals(String.format("Missing implementation for specified gender: %s.", invalidPatientGenderRaw),
+                     e.getMessage());
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "X", "NB", "invalid string", })
+    void constructorFailsCorrectlyOnInvalidGenderTest(String invalidPatientGenderRaw) {
+        Exception e = assertThrows(IllegalArgumentException.class,
+                                   () -> new Patient(patient1IdRaw, patient1Name,
+                                                     patient1Age, invalidPatientGenderRaw));
+        assertEquals(String.format("Missing implementation for specified gender: %s.", invalidPatientGenderRaw),
+                     e.getMessage());
+
     }
 
     @Test
