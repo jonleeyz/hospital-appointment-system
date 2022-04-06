@@ -46,7 +46,7 @@ class AppointmentUnitTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "09:60:00", "09:00:60", "24:00:00" })
+    @ValueSource(strings = { "09:60:00", "09:00:60", "24:01:00", "25:00:00" })
     void constructorFailsCorrectlyOnInvalidTimeTest(String invalidTime) {
         assertThrows(DateTimeException.class,
                      () -> new Appointment(appointment1Id, patient1Id, doctor1Id, date1Raw, invalidTime));
