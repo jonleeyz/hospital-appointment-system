@@ -15,7 +15,9 @@ class Appointment {
     private LocalTime time;
     private int duration;
 
-    protected Appointment(PatientId patientId, DoctorId doctorId, String date, String time) {
+    protected Appointment(AppointmentId appointmentId, PatientId patientId, DoctorId doctorId,
+                          String date, String time) {
+        this.appointmentId = appointmentId;
         this.patientId = patientId;
         this.doctorId = doctorId;
         this.date = LocalDate.parse(date, DATE_FORMATTER);
