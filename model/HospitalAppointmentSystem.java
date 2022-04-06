@@ -1,11 +1,12 @@
 package model;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Arrays;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -55,5 +56,22 @@ public class HospitalAppointmentSystem {
 
     public void cancelAppointment(String patientId, String doctorId, String dateAndTime) {
         return;
+    }
+
+    private List<List<String>> parseCsvToStrings(String csvFilePath) {
+        List<List<String>> data = new ArrayList<List<String>>();
+        File file = new File(csvFilePath);
+
+        try {
+            Scanner s = new Scanner(file);
+            while (s.hasNextLine()) {
+                List<String> lineData = Arrays.asList(s.nextLine().split(","));
+                data.add(lineData);
+            }
+            s.close();
+        } catch (FileNotFoundException e) {
+            //TODO: handle
+        }
+        return data;
     }
 }
