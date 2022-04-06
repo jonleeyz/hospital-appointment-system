@@ -2,8 +2,12 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 class Appointment {
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+    
     private AppointmentId appointmentId;
     private PatientId patientId;
     private DoctorId doctorId;
@@ -14,9 +18,8 @@ class Appointment {
     protected Appointment(PatientId patientId, DoctorId doctorId, String date, String time) {
         this.patientId = patientId;
         this.doctorId = doctorId;
-        // need to update
-        this.date = LocalDate.parse(date);
-        this.time = LocalTime.parse(time);
+        this.date = LocalDate.parse(date, DATE_FORMATTER);
+        this.time = LocalTime.parse(time, TIME_FORMATTER);
         this.duration = 60;
     }
 
