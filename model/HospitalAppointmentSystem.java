@@ -18,10 +18,10 @@ public class HospitalAppointmentSystem {
     private DoctorTable doctorTable = new DoctorTable();
     private PatientTable patientTable = new PatientTable();
     private AppointmentTable appointmentTable = new AppointmentTable();
+
+    private IndexedAppointmentTable<DoctorId> doctorIndexedAppointmentTable = new IndexedAppointmentTable<DoctorId>();
+    private IndexedAppointmentTable<PatientId> patientIndexedAppointmentTable = new IndexedAppointmentTable<PatientId>();
     
-    private HashMap<DoctorId, AppointmentId> doctorIndexedAppointmentTable = new HashMap<DoctorId, AppointmentId>();
-    private HashMap<PatientId, AppointmentId> patientIndexedAppointmentTable = new HashMap<PatientId, AppointmentId>();
-   
     public HospitalAppointmentSystem(String csvFilePath) {
         List<List<String>> csvData = null;
 
@@ -152,14 +152,14 @@ public class HospitalAppointmentSystem {
             String appointmentIdRaw = record.get(fieldNumber++);
             String appointmentDateTimeRaw = record.get(fieldNumber++);
             String[] appointmentDateTimeSplit = appointmentDateTimeRaw.split(" ");
-            String appointmentDate = appointmentDateTimeSplit[0];
-            String appointmentTime = appointmentDateTimeSplit[1];
+            String appointmentDateRaw = appointmentDateTimeSplit[0];
+            String appointmentTimeRaw = appointmentDateTimeSplit[1];
 
             try {
-                appointmentTable.create(appointmentIdRaw, patientId, doctorId, appointmentDate, appointmentTime);
+                appointmentTable.create(appointmentIdRaw, patientId, doctorId, appointmentDateRaw, appointmentTimeRaw);
             } catch (IllegalStateException ise) {
                 assert appointmentTable.verifyDetails(appointmentIdRaw, patientId, doctorId,
-                                                      appointmentDate, appointmentTime);
+                                                      appointmentDateRaw, appointmentTimeRaw);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(
                         String.format(String.join("Invalid Appointment details at record %d: ",
@@ -168,7 +168,13 @@ public class HospitalAppointmentSystem {
                                       recordNumber, appointmentIdRaw));
             }
 
-            // populate doctor and patient indexed appointment tables
+
+            Appointment appointment = appointmentTable.get(appointmentIdRaw);
+            AppointmentId appointmentId = appointment.getAppointmentId();
+            LocalDate appointmentDate = appointment.getDate();
+
+            doctorIndexedAppointmentTable.add(doctorId, appointmentDate, appointmentId);
+            patientIndexedAppointmentTable.add(patientId, appointmentDate, appointmentId);
         }
     }
 }
