@@ -17,7 +17,7 @@ public class HospitalAppointmentSystem {
 
     private DoctorTable doctorTable = new DoctorTable();
     private PatientTable patientTable = new PatientTable();
-    private HashMap<AppointmentId, Appointment> appointmentTable = new HashMap<AppointmentId, Appointment>();
+    private AppointmentTable appointmentTable = new AppointmentTable();
     
     private HashMap<DoctorId, AppointmentId> doctorIndexedAppointmentTable = new HashMap<DoctorId, AppointmentId>();
     private HashMap<PatientId, AppointmentId> patientIndexedAppointmentTable = new HashMap<PatientId, AppointmentId>();
@@ -104,13 +104,26 @@ public class HospitalAppointmentSystem {
         for (List<String> record: csvData) {
             int fieldNumber = 0;
 
-            DoctorId doctorId = null;
-            PatientId patientId = null;
+            // DoctorId doctorId = null;
+            // PatientId patientId = null;
 
             /** Parsing Doctor details */
             String doctorIdRaw = record.get(fieldNumber++);
             String doctorName = record.get(fieldNumber++);
 
+            try {
+                doctorTable.create(doctorIdRaw, doctorName);
+            } catch (IllegalStateException ise) {
+                assert doctorTable.verifyDetails(doctorIdRaw, doctorName);
+            } catch (AssertionError ae) {
+                throw new IllegalArgumentException(
+                        String.format(String.join("Invalid Doctor details at record %d: Doctor with DoctorId %s ",
+                                                  "was previously registered with different details."),
+                                      recordNumber, doctorIdRaw));
+            }
+            DoctorId doctorId = doctorTable.get(doctorIdRaw).getId();
+
+            /*
             try {
                 assert doctorTable.verifyDetails(doctorIdRaw, doctorName);
                 doctorId = doctorTable.get(doctorIdRaw).getId();
@@ -122,6 +135,7 @@ public class HospitalAppointmentSystem {
             } catch (IllegalStateException ise) {
                 doctorTable.create(doctorIdRaw, doctorName);
             }
+            */
 
             /** Parsing Patient details */
             String patientIdRaw = record.get(fieldNumber++);
@@ -140,6 +154,19 @@ public class HospitalAppointmentSystem {
             }
 
             try {
+                patientTable.create(patientIdRaw, patientName, patientAge, patientGender);
+            } catch (IllegalStateException ise) {
+                assert patientTable.verifyDetails(patientIdRaw, patientName, patientAge, patientGender);
+            } catch (AssertionError ae) {
+                throw new IllegalArgumentException(
+                        String.format(String.join("Invalid Patient details at record %d: Patient with PatientId %s ",
+                                                  "was previously registered with different details."),
+                                      recordNumber, patientIdRaw));
+            }
+            PatientId patientId = patientTable.get(patientIdRaw).getId();
+
+            /*
+            try {
                 assert patientTable.verifyDetails(patientIdRaw, patientName, patientAge, patientGender);
                 patientId = patientTable.get(patientIdRaw).getId();
             } catch (AssertionError ae) {
@@ -155,11 +182,29 @@ public class HospitalAppointmentSystem {
                                                   iae.getMessage()),
                                       recordNumber));
             }
+            */
 
+            /** Parsing Appointment details */
             String appointmentIdRaw = record.get(fieldNumber++);
             String appointmentDateTimeRaw = record.get(fieldNumber++);
+            String[] appointmentDateTimeSplit = appointmentDateTimeRaw.split(" ");
+            String appointmentDate = appointmentDateTimeSplit[0];
+            String appointmentTime = appointmentDateTimeSplit[1];
 
-            
+            try {
+                appointmentTable.create(appointmentIdRaw, patientId, doctorId, appointmentDate, appointmentTime);
+            } catch (IllegalStateException ise) {
+                assert appointmentTable.verifyDetails(appointmentIdRaw, patientId, doctorId,
+                                                      appointmentDate, appointmentTime);
+            } catch (AssertionError ae) {
+                throw new IllegalArgumentException(
+                        String.format(String.join("Invalid Appointment details at record %d: ",
+                                                  "Appointment with AppointmentId %s ",
+                                                  "was previously registered with different details."),
+                                      recordNumber, appointmentIdRaw));
+            }
+
+            // populate doctor and patient indexed appointment tables
         }
     }
 }
