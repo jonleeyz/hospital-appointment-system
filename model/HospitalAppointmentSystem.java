@@ -198,8 +198,8 @@ public class HospitalAppointmentSystem {
             int fieldNumber = 0;
 
             /** Parsing Doctor details */
-            String doctorIdRaw = record.get(fieldNumber++);
-            String doctorName = record.get(fieldNumber++);
+            String doctorIdRaw = record.get(fieldNumber++).trim();
+            String doctorName = record.get(fieldNumber++).trim();
 
             try {
                 doctorTable.create(doctorIdRaw, doctorName);
@@ -215,10 +215,10 @@ public class HospitalAppointmentSystem {
             DoctorId doctorId = doctorTable.get(doctorIdRaw).getId();
 
             /** Parsing Patient details */
-            String patientIdRaw = record.get(fieldNumber++);
-            String patientName = record.get(fieldNumber++);
-            String patientAgeRaw = record.get(fieldNumber++);
-            String patientGender = record.get(fieldNumber++);
+            String patientIdRaw = record.get(fieldNumber++).trim();
+            String patientName = record.get(fieldNumber++).trim();
+            String patientAgeRaw = record.get(fieldNumber++).trim();
+            String patientGender = record.get(fieldNumber++).trim();
 
             int patientAge;
             try {
@@ -245,8 +245,9 @@ public class HospitalAppointmentSystem {
             PatientId patientId = patientTable.get(patientIdRaw).getId();
 
             /** Parsing Appointment details */
-            String appointmentIdRaw = record.get(fieldNumber++);
-            String appointmentDateTimeRaw = record.get(fieldNumber++);
+            String appointmentIdRaw = record.get(fieldNumber++).trim();
+            String appointmentDateTimeRaw = record.get(fieldNumber++).trim();
+
             String[] appointmentDateTimeSplit = appointmentDateTimeRaw.split(" ");
             String appointmentDateRaw = appointmentDateTimeSplit[0];
             String appointmentTimeRaw = appointmentDateTimeSplit[1];
