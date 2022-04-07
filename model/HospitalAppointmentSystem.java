@@ -94,8 +94,48 @@ public class HospitalAppointmentSystem {
                                            new AppointmentId(appointmentIdRaw));
     }
 
-    public void cancelAppointment(String patientId, String doctorId, String dateAndTime) {
-        return;
+    public void cancelAppointment(String patientIdRaw, String doctorIdRaw, String dateAndTime) {
+        try {
+            assert patientTable.contains(patientIdRaw);
+        } catch (AssertionError ae) {
+            System.out.println(String.format(String.join(" ",
+                                                         "Appointment cannot be cancelled:",
+                                                         "Patient with PatientId %s does not exist."),
+                                             patientIdRaw));
+            return;
+        }
+
+        try {
+            assert doctorTable.contains(doctorIdRaw);
+        } catch (AssertionError ae) {
+            System.out.println(String.format(String.join(" ",
+                                                         "Appointment cannot be cancelled:",
+                                                         "Doctor with DoctorId %s does not exist."),
+                                             doctorIdRaw));
+            return;
+        }
+
+        String[] dateAndTimeSplit = dateAndTime.split(" ");
+        String dateRaw = dateAndTimeSplit[0];
+        String timeRaw = dateAndTimeSplit[1];
+
+        DoctorId doctorId = doctorTable.get(doctorIdRaw).getId();
+        PatientId patientId = patientTable.get(patientIdRaw).getId();
+        LocalDate date = LocalDate.parse(dateRaw, Appointment.DATE_FORMATTER);
+        LocalTime time = LocalTime.parse(timeRaw, Appointment.TIME_FORMATTER);
+        AppointmentId appointmentId;
+
+        try {
+            appointmentId = doctorIndexedAppointmentTable.getAppointmentId(doctorId, date, time);
+        } catch (NoSuchElementException nsee) {
+            System.out.println(String.join(" ",
+                                           "Appointment cannot be cancelled.",
+                                           nsee.getMessage()));
+            return;
+        }
+        
+        doctorIndexedAppointmentTable.remove(doctorId, date, time, appointmentId);
+        patientIndexedAppointmentTable.remove(patientId, date, time, appointmentId);
     }
 
     List<List<String>> parseCsvToStrings(String csvFilePath) throws FileNotFoundException {
