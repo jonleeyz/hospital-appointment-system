@@ -10,6 +10,9 @@ import java.util.HashMap;
 class DoctorTable {
     private HashMap<DoctorId, Doctor> table = new HashMap<DoctorId, Doctor>();
 
+    DoctorTable() {
+    }
+
     boolean isEmpty() {
         return table.isEmpty();
     }
