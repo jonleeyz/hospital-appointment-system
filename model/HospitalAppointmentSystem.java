@@ -11,32 +11,33 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class HospitalAppointmentSystem {
-    HashMap<DoctorId, Doctor> doctorTable = new HashMap<DoctorId, Doctor>();
-    HashMap<PatientId, Patient> patientTable = new HashMap<PatientId, Patient>();
-    HashMap<AppointmentId, Appointment> appointmentTable = new HashMap<AppointmentId, Appointment>();
     private static final String[] CONFIGURED_HEADER = {"doctor_id", "doctor_name",
                                                        "patient_id", "patient_name", "patient_age", "patient_gender",
                                                        "appointment_id", "appointment_datetime"};
+
+    private DoctorTable doctorTable = new DoctorTable();
+    private PatientTable patientTable = new PatientTable();
+    private HashMap<AppointmentId, Appointment> appointmentTable = new HashMap<AppointmentId, Appointment>();
     
-    HashMap<DoctorId, AppointmentId> doctorIndexedAppointmentTable = new HashMap<DoctorId, AppointmentId>();
-    HashMap<PatientId, AppointmentId> patientIndexedAppointmentTable = new HashMap<PatientId, AppointmentId>();
+    private HashMap<DoctorId, AppointmentId> doctorIndexedAppointmentTable = new HashMap<DoctorId, AppointmentId>();
+    private HashMap<PatientId, AppointmentId> patientIndexedAppointmentTable = new HashMap<PatientId, AppointmentId>();
    
     public HospitalAppointmentSystem(String csvFilePath) {
-        List<List<String>> data = new ArrayList<List<String>>();
-        File file = new File(csvFilePath);
+        List<List<String>> csvData = null;
 
         try {
-            Scanner s = new Scanner(file);
-            while (s.hasNextLine()) {
-                System.out.print(s.nextLine());
-            
-                List<String> lineData = Arrays.asList(s.nextLine().split(","));
-                data.add(lineData);
-            }
+            csvData = parseCsvToStrings(csvFilePath);
         } catch (Exception e) {
-            System.out.print(e);
+            //TODO: handle exception
         }
-        
+
+        try {
+            verifyCsvSchema(csvData.get(0));
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
+
+        populateFieldsWithStrings(csvData.subList(1, csvData.size()));
     }
 
     public Appointment[] getAppointments(String doctorID, String dateAndTime) {
@@ -87,4 +88,3 @@ public class HospitalAppointmentSystem {
             }
         }
     }
-}
