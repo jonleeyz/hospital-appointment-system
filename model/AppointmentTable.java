@@ -51,7 +51,7 @@ class AppointmentTable {
             return get(appointmentIdRaw).equals(dummyAppointment);
         } catch (NullPointerException e) {
             throw new IllegalStateException(String.format("Appointment with AppointmentId %s does not exist.",
-                                                          appointmentId));
+                                                          appointmentIdRaw));
         }
     }
 }
