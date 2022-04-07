@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -37,9 +38,27 @@ public class HospitalAppointmentSystem {
         populateFieldsWithStrings(csvData.subList(1, csvData.size()));
     }
 
-    public Appointment[] getAppointments(String doctorID, String dateAndTime) {
-        // to be implemented
-        return new Appointment[0];
+    public ArrayList<Appointment> getAppointments(String doctorIdRaw, String dateAndTime) {
+        ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
+        String[] dateAndTimeSplit = dateAndTime.split(" ");
+        String dateRaw = dateAndTimeSplit[0];
+
+        try {
+            assert doctorTable.contains(doctorIdRaw);
+        } catch (AssertionError ae) {
+            System.out.println(String.format("No Doctor with DoctorId %s exists. Returning empty array.",
+                                             doctorIdRaw));
+            return appointmentList;
+        }
+
+        DoctorId doctorId = doctorTable.get(doctorIdRaw).getId();
+        LocalDate date = LocalDate.parse(dateRaw);
+        HashMap<LocalTime, AppointmentId> appointmentsHashedByTime = doctorIndexedAppointmentTable.getAll(doctorId, date);
+
+        for (AppointmentId appointmentId: appointmentsHashedByTime.values()) {
+            appointmentList.add(appointmentTable.get(appointmentId.toString()));
+        }
+        return appointmentList;
     }
 
     public void fixAppointment(String patientIdRaw, String doctorIdRaw, String dateAndTime) {
