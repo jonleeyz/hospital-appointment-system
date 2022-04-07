@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 class Appointment {
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
+    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
     private static final Integer[] monthsWithout31stArray = {4, 6, 9, 11};
     private static final HashSet<Integer> monthsWithout31st = new HashSet<Integer>(Arrays.asList(monthsWithout31stArray));
     
