@@ -2,18 +2,16 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class HospitalAppointmentSystem {
-    private static final String[] CONFIGURED_HEADER = {"doctor_id", "doctor_name",
-                                                       "patient_id", "patient_name", "patient_age", "patient_gender",
-                                                       "appointment_id", "appointment_datetime"};
+    public static final String[] CONFIGURED_HEADER = {"doctor_id", "doctor_name",
+                                                      "patient_id", "patient_name", "patient_age", "patient_gender",
+                                                      "appointment_id", "appointment_datetime"};
 
     private DoctorTable doctorTable = new DoctorTable();
     private PatientTable patientTable = new PatientTable();
@@ -21,6 +19,9 @@ public class HospitalAppointmentSystem {
 
     private IndexedAppointmentTable<DoctorId> doctorIndexedAppointmentTable = new IndexedAppointmentTable<DoctorId>();
     private IndexedAppointmentTable<PatientId> patientIndexedAppointmentTable = new IndexedAppointmentTable<PatientId>();
+
+    public HospitalAppointmentSystem() {
+    }
     
     public HospitalAppointmentSystem(String csvFilePath) {
         List<List<String>> csvData = null;
@@ -62,7 +63,7 @@ public class HospitalAppointmentSystem {
         return;
     }
 
-    private List<List<String>> parseCsvToStrings(String csvFilePath) {
+    List<List<String>> parseCsvToStrings(String csvFilePath) {
         List<List<String>> data = new ArrayList<List<String>>();
         File file = new File(csvFilePath);
 
@@ -79,12 +80,13 @@ public class HospitalAppointmentSystem {
         return data;
     }
 
-    private void verifyCsvSchema(List<String> header) {
+    void verifyCsvSchema(List<String> header) {
         int configuredHeaderIndex = 0;
         for (String s: header) {
             String field = s.trim();
             if (!(field.equals(CONFIGURED_HEADER[configuredHeaderIndex++]))) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException(String.join("CSV file is of incorrect format. ",
+                                                               "See CONFIGURED_HEADER for correct schema."));
             }
         }
     }
@@ -98,7 +100,7 @@ public class HospitalAppointmentSystem {
      *   registered Patient with the same PatientId.
      * - @throws IllegalArgumentException if a record has invalid Patient information (eg. age, gender). 
      */
-    private void populateFieldsWithStrings(List<List<String>> csvData) throws IllegalArgumentException {
+    void populateFieldsWithStrings(List<List<String>> csvData) throws IllegalArgumentException {
         int recordNumber = 1;
 
         for (List<String> record: csvData) {
