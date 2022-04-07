@@ -17,7 +17,7 @@ class PatientTableUnitTest {
     private final int patientAge1 = 10;
     private final int patientAge2 = 81;
     private final String patientGender1 = "F";
-    private final String patientGender2 = "N";
+    private final String patientGender2 = "M";
 
     @BeforeEach
     void init() {
