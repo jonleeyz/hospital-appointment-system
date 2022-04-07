@@ -10,6 +10,10 @@ import java.util.HashMap;
 class DoctorTable {
     private HashMap<DoctorId, Doctor> table = new HashMap<DoctorId, Doctor>();
 
+    boolean isEmpty() {
+        return table.isEmpty();
+    }
+
     /**
      * Checks if a Doctor with DoctorId doctorId exists in the DoctorTable.
      */ 
