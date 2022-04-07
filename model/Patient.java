@@ -1,10 +1,8 @@
 package model;
 
 import java.lang.IllegalArgumentException;
-// import java.lang.UnsupportedOperationException;
 
 class Patient {
-    // can be updated if more than one gender is to be recorded
     enum Gender {
         M,
         F
@@ -15,7 +13,11 @@ class Patient {
     private int age;
     private Gender gender;
 
-    protected Patient(String id, String name, int age, String gender) {
+    /**
+     * - @throws IllegalArgumentException if specified age is negative.
+     * - @throws IllegalArgumentException if specified gender is not implemented.
+     */
+    protected Patient(String id, String name, int age, String gender) throws IllegalArgumentException {
         this.id = new PatientId(id);
         this.name = name;
         this.age = age;
@@ -23,7 +25,6 @@ class Patient {
         if (age < 0) {
             throw new IllegalArgumentException(String.format("Specified age [%d] cannot be negative.", age));
         }
-        // extension: add check for whole numbers; might need to implement at parser level.
         
         if (gender == "M") {
             this.gender = Gender.M;
@@ -49,18 +50,6 @@ class Patient {
 
     protected Gender getGender() {
         return gender;
-
-        /*
-        if (gender == Gender.M) {
-            return "M";
-        } else if (gender == Gender.F) {
-            return "F";
-        } else {
-            throw new UnsupportedOperationException(
-                String.format("Missing implementation for Patient.getGender for specified gender: %s.",
-                              gender.toString()));
-        }
-        */
     }
 
     @Override

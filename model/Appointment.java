@@ -19,8 +19,14 @@ class Appointment {
     private LocalTime time;
     private int duration;
 
+    /**
+     * - @throws IllegalArgumentException if a created Date object specifies day 31 with a month that does not have
+     *   the 31st.
+     * - @throws IllegalArgumentException if a Created Date object specifies day 29 or above with month 2; adjusted
+     *   for leap years.
+     */
     protected Appointment(AppointmentId appointmentId, PatientId patientId, DoctorId doctorId,
-                          String date, String time) {
+                          String date, String time) throws IllegalArgumentException {
         this.appointmentId = appointmentId;
         this.patientId = patientId;
         this.doctorId = doctorId;
