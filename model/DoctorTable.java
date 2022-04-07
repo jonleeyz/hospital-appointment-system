@@ -25,6 +25,20 @@ class DoctorTable {
     }
 
     /**
+     * Creates a new Doctor entry.
+     * - @throws IllegalStateException if a Doctor object with DoctorId doctorId already exists.
+     */
+    void create(String doctorId, String doctorName) {
+        if (contains(doctorId)) {
+            throw new IllegalStateException(String.format("Doctor with DoctorId %s already exists.",
+                                            doctorId));
+        }
+
+        table.put(new DoctorId(doctorId),
+                  new Doctor(doctorId, doctorName));
+    }
+
+    /**
      * Verifies that the details provided are consistent with the Doctor in the DoctorTable.
      * - @throws IllegalStateException if no Doctor object with DoctorId doctorId exists.
      */
@@ -37,11 +51,4 @@ class DoctorTable {
         }
     }
 
-    /**
-     * Creates a new Doctor entry.
-     */
-    void create(String doctorId, String doctorName) {
-        table.put(new DoctorId(doctorId),
-                  new Doctor(doctorId, doctorName));
-    }
 }

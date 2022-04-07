@@ -25,6 +25,20 @@ class PatientTable {
     }
 
     /**
+     * Creates a new Patient entry.
+     * - @throws IllegalStateException if a Patient object with PatientId patientId already exists.
+     */
+    void create(String patientId, String patientName, int patientAge, String patientGender) {
+        if (contains(patientId)) {
+            throw new IllegalStateException(String.format("Patient with PatientId %s already exists.",
+                                            patientId));
+        }
+
+        table.put(new PatientId(patientId),
+                  new Patient(patientId, patientName, patientAge, patientGender));
+    }
+
+    /**
      * Verifies that the details provided are consistent with the Patient in the PatientTable.
      * - @throws IllegalStateException if no Patient object with PatientId patientId exists.
      */
@@ -38,11 +52,4 @@ class PatientTable {
         }
     }
 
-    /**
-     * Creates a new Patient entry.
-     */
-    void create(String patientId, String patientName, int patientAge, String patientGender) {
-        table.put(new PatientId(patientId),
-                  new Patient(patientId, patientName, patientAge, patientGender));
-    }
 }
