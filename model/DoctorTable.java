@@ -18,7 +18,7 @@ class DoctorTable {
     }
 
     /**
-     * Checks if a Doctor with DoctorId doctorId exists in the DoctorTable.
+     * Checks if a Doctor with DoctorId doctorId exists in the table.
      */ 
     boolean contains(String doctorId) {
         return table.containsKey(new DoctorId(doctorId));
@@ -35,7 +35,7 @@ class DoctorTable {
      * Creates a new Doctor entry.
      * - @throws IllegalStateException if a Doctor object with DoctorId doctorId already exists.
      */
-    void create(String doctorId, String doctorName) {
+    void create(String doctorId, String doctorName) throws IllegalStateException {
         if (contains(doctorId)) {
             throw new IllegalStateException(String.format("Doctor with DoctorId %s already exists.",
                                             doctorId));
@@ -46,7 +46,7 @@ class DoctorTable {
     }
 
     /**
-     * Verifies that the details provided are consistent with the Doctor in the DoctorTable.
+     * Verifies that the details provided are consistent with the Doctor in the table.
      * - @throws IllegalStateException if no Doctor object with DoctorId doctorId exists.
      */
     boolean verifyDetails(String doctorId, String doctorName) throws IllegalStateException {
@@ -57,5 +57,4 @@ class DoctorTable {
             throw new IllegalStateException(String.format("Doctor with DoctorId %s does not exist.", doctorId));
         }
     }
-
 }
