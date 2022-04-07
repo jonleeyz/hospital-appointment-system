@@ -48,8 +48,8 @@ public class HospitalAppointmentSystem {
     public void fixAppointment(String patientId, String doctorId, String dateAndTime) {
         // Assume that patientId and doctorId must already exist.
         // check if patientId and doctorId exists. If either does not exist, then fail gracefully.
-        if (patientTable.containsKey(new PatientId(patientId)) &&
-            doctorTable.containsKey(new DoctorId(doctorId))) {
+        if (patientTable.contains(patientId) &&
+            doctorTable.contains(doctorId)) {
             // parse string into date and time
             // create new Appointment object and assign id
             // add Appointment object to tables
