@@ -75,7 +75,7 @@ public class HospitalAppointmentSystem {
             }
             s.close();
         } catch (FileNotFoundException e) {
-            //TODO: handle
+            System.out.println(e.getMessage());
         }
         return data;
     }
