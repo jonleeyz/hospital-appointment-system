@@ -24,18 +24,12 @@ public class HospitalAppointmentSystem {
     }
     
     public HospitalAppointmentSystem(String csvFilePath) {
-        List<List<String>> csvData = null;
-
-        try {
-            csvData = parseCsvToStrings(csvFilePath);
-        } catch (Exception e) {
-            //TODO: handle exception
-        }
+        List<List<String>> csvData = parseCsvToStrings(csvFilePath);
 
         try {
             verifyCsvSchema(csvData.get(0));
-        } catch (Exception e) {
-            //TODO: handle exception
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalStateException("CSV file is missing its header.");
         }
 
         populateFieldsWithStrings(csvData.subList(1, csvData.size()));
