@@ -175,7 +175,8 @@ public class HospitalAppointmentSystem {
         for (String s: header) {
             String field = s.trim();
             if (!(field.equals(CONFIGURED_HEADER[configuredHeaderIndex++]))) {
-                throw new IllegalArgumentException(String.join("CSV file is of incorrect format. ",
+                throw new IllegalArgumentException(String.join(" ",
+                                                               "CSV file is of incorrect format.",
                                                                "See CONFIGURED_HEADER for correct schema."));
             }
         }
@@ -197,8 +198,8 @@ public class HospitalAppointmentSystem {
             int fieldNumber = 0;
 
             /** Parsing Doctor details */
-            String doctorIdRaw = record.get(fieldNumber++);
-            String doctorName = record.get(fieldNumber++);
+            String doctorIdRaw = record.get(fieldNumber++).trim();
+            String doctorName = record.get(fieldNumber++).trim();
 
             try {
                 doctorTable.create(doctorIdRaw, doctorName);
@@ -206,24 +207,26 @@ public class HospitalAppointmentSystem {
                 assert doctorTable.verifyDetails(doctorIdRaw, doctorName);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(
-                        String.format(String.join("Invalid Doctor details at record %d: Doctor with DoctorId %s ",
+                        String.format(String.join(" ",
+                                                  "Invalid Doctor details at record %d: Doctor with DoctorId %s",
                                                   "was previously registered with different details."),
                                       recordNumber, doctorIdRaw));
             }
             DoctorId doctorId = doctorTable.get(doctorIdRaw).getId();
 
             /** Parsing Patient details */
-            String patientIdRaw = record.get(fieldNumber++);
-            String patientName = record.get(fieldNumber++);
-            String patientAgeRaw = record.get(fieldNumber++);
-            String patientGender = record.get(fieldNumber++);
+            String patientIdRaw = record.get(fieldNumber++).trim();
+            String patientName = record.get(fieldNumber++).trim();
+            String patientAgeRaw = record.get(fieldNumber++).trim();
+            String patientGender = record.get(fieldNumber++).trim();
 
             int patientAge;
             try {
                 patientAge = Integer.parseInt(patientAgeRaw);
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException(
-                            String.format(String.join("Invalid Patient age at record %d: specified age %s ",
+                            String.format(String.join(" ",
+                                                      "Invalid Patient age at record %d: specified age %s",
                                                       "cannot be parsed to int."),
                                           recordNumber, patientAgeRaw));
             }
@@ -234,15 +237,17 @@ public class HospitalAppointmentSystem {
                 assert patientTable.verifyDetails(patientIdRaw, patientName, patientAge, patientGender);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(
-                        String.format(String.join("Invalid Patient details at record %d: Patient with PatientId %s ",
+                        String.format(String.join(" ",
+                                                  "Invalid Patient details at record %d: Patient with PatientId %s",
                                                   "was previously registered with different details."),
                                       recordNumber, patientIdRaw));
             }
             PatientId patientId = patientTable.get(patientIdRaw).getId();
 
             /** Parsing Appointment details */
-            String appointmentIdRaw = record.get(fieldNumber++);
-            String appointmentDateTimeRaw = record.get(fieldNumber++);
+            String appointmentIdRaw = record.get(fieldNumber++).trim();
+            String appointmentDateTimeRaw = record.get(fieldNumber++).trim();
+
             String[] appointmentDateTimeSplit = appointmentDateTimeRaw.split(" ");
             String appointmentDateRaw = appointmentDateTimeSplit[0];
             String appointmentTimeRaw = appointmentDateTimeSplit[1];
@@ -254,8 +259,9 @@ public class HospitalAppointmentSystem {
                                                       appointmentDateRaw, appointmentTimeRaw);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(
-                        String.format(String.join("Invalid Appointment details at record %d: ",
-                                                  "Appointment with AppointmentId %s ",
+                        String.format(String.join(" ",
+                                                  "Invalid Appointment details at record %d:",
+                                                  "Appointment with AppointmentId %s",
                                                   "was previously registered with different details."),
                                       recordNumber, appointmentIdRaw));
             }
