@@ -26,6 +26,7 @@ class DoctorTable {
 
     /**
      * Verifies that the details provided are consistent with the Doctor in the DoctorTable.
+     * - @throws IllegalStateException if no Doctor object with DoctorId doctorId exists.
      */
     boolean verifyDetails(String doctorId, String doctorName) throws IllegalStateException {
         Doctor dummyDoctor = new Doctor(doctorId, doctorName);

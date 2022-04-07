@@ -1,10 +1,8 @@
 package model;
 
 import java.lang.IllegalArgumentException;
-// import java.lang.UnsupportedOperationException;
 
 class Patient {
-    // can be updated if more than one gender is to be recorded
     enum Gender {
         M,
         F
@@ -15,6 +13,10 @@ class Patient {
     private int age;
     private Gender gender;
 
+    /**
+     * - @throws IllegalArgumentException if specified age is negative.
+     * - @throws IllegalArgumentException if specified gender is not implemented.
+     */
     protected Patient(String id, String name, int age, String gender) throws IllegalArgumentException {
         this.id = new PatientId(id);
         this.name = name;

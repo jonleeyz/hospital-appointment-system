@@ -26,6 +26,7 @@ class PatientTable {
 
     /**
      * Verifies that the details provided are consistent with the Patient in the PatientTable.
+     * - @throws IllegalStateException if no Patient object with PatientId patientId exists.
      */
     boolean verifyDetails(String patientId, String patientName, int patientAge, String patientGender)
         throws IllegalStateException {
