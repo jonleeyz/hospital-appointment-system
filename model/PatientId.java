@@ -25,10 +25,4 @@ final class PatientId {
     public int hashCode() {
         return id.hashCode();
     }
-
-    @Override
-    public String toString() {
-        String output = String.format("PatientID obj: %s", id);
-        return output;
-    }
 }
