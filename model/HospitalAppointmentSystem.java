@@ -23,7 +23,7 @@ public class HospitalAppointmentSystem {
     public HospitalAppointmentSystem() {
     }
     
-    public HospitalAppointmentSystem(String csvFilePath) {
+    public HospitalAppointmentSystem(String csvFilePath) throws FileNotFoundException {
         List<List<String>> csvData = parseCsvToStrings(csvFilePath);
 
         try {
@@ -57,20 +57,16 @@ public class HospitalAppointmentSystem {
         return;
     }
 
-    List<List<String>> parseCsvToStrings(String csvFilePath) {
+    List<List<String>> parseCsvToStrings(String csvFilePath) throws FileNotFoundException {
         List<List<String>> data = new ArrayList<List<String>>();
         File file = new File(csvFilePath);
 
-        try {
-            Scanner s = new Scanner(file);
-            while (s.hasNextLine()) {
-                List<String> lineData = Arrays.asList(s.nextLine().split(","));
-                data.add(lineData);
-            }
-            s.close();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+        Scanner s = new Scanner(file);
+        while (s.hasNextLine()) {
+            List<String> lineData = Arrays.asList(s.nextLine().split(","));
+            data.add(lineData);
         }
+        s.close();
         return data;
     }
 
