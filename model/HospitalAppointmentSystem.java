@@ -175,7 +175,8 @@ public class HospitalAppointmentSystem {
         for (String s: header) {
             String field = s.trim();
             if (!(field.equals(CONFIGURED_HEADER[configuredHeaderIndex++]))) {
-                throw new IllegalArgumentException(String.join("CSV file is of incorrect format. ",
+                throw new IllegalArgumentException(String.join(" ",
+                                                               "CSV file is of incorrect format.",
                                                                "See CONFIGURED_HEADER for correct schema."));
             }
         }
@@ -206,7 +207,8 @@ public class HospitalAppointmentSystem {
                 assert doctorTable.verifyDetails(doctorIdRaw, doctorName);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(
-                        String.format(String.join("Invalid Doctor details at record %d: Doctor with DoctorId %s ",
+                        String.format(String.join(" ",
+                                                  "Invalid Doctor details at record %d: Doctor with DoctorId %s",
                                                   "was previously registered with different details."),
                                       recordNumber, doctorIdRaw));
             }
@@ -223,7 +225,8 @@ public class HospitalAppointmentSystem {
                 patientAge = Integer.parseInt(patientAgeRaw);
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException(
-                            String.format(String.join("Invalid Patient age at record %d: specified age %s ",
+                            String.format(String.join(" ",
+                                                      "Invalid Patient age at record %d: specified age %s",
                                                       "cannot be parsed to int."),
                                           recordNumber, patientAgeRaw));
             }
@@ -234,7 +237,8 @@ public class HospitalAppointmentSystem {
                 assert patientTable.verifyDetails(patientIdRaw, patientName, patientAge, patientGender);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(
-                        String.format(String.join("Invalid Patient details at record %d: Patient with PatientId %s ",
+                        String.format(String.join(" ",
+                                                  "Invalid Patient details at record %d: Patient with PatientId %s",
                                                   "was previously registered with different details."),
                                       recordNumber, patientIdRaw));
             }
@@ -254,8 +258,9 @@ public class HospitalAppointmentSystem {
                                                       appointmentDateRaw, appointmentTimeRaw);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(
-                        String.format(String.join("Invalid Appointment details at record %d: ",
-                                                  "Appointment with AppointmentId %s ",
+                        String.format(String.join(" ",
+                                                  "Invalid Appointment details at record %d:",
+                                                  "Appointment with AppointmentId %s",
                                                   "was previously registered with different details."),
                                       recordNumber, appointmentIdRaw));
             }
