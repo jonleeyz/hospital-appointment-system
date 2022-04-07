@@ -8,7 +8,7 @@ public class Driver {
         try {
             HospitalAppointmentSystem demoSystem = new HospitalAppointmentSystem("../test/data/dummy.csv");
         } catch (FileNotFoundException fne) {
-            System.out.println(String.join("Terminating parse: CSV file not found at ",
+            System.out.println(String.format("Terminating parse: CSV file not found at %s",
                                            fne.getMessage()));
         }
         return;
