@@ -88,3 +88,78 @@ public class HospitalAppointmentSystem {
             }
         }
     }
+    
+    /**
+     * Populates the tables in the HospitalAppointmentSystem with csv data.
+     * - @throws IllegalArgumentException if a record has Doctor information that does not match with a previously
+     *   registered Doctor with the same DoctorId.
+     * - @throws IllegalArgumentException if a record has Patient age information that cannot be parsed to an int.
+     * - @throws IllegalArgumentException if a record has Patient information that does not match with a previously
+     *   registered Patient with the same PatientId.
+     * - @throws IllegalArgumentException if a record has invalid Patient information (eg. age, gender). 
+     */
+    private void populateFieldsWithStrings(List<List<String>> csvData) throws IllegalArgumentException {
+        int recordNumber = 1;
+
+        for (List<String> record: csvData) {
+            int fieldNumber = 0;
+
+            DoctorId doctorId = null;
+            PatientId patientId = null;
+
+            /** Parsing Doctor details */
+            String doctorIdRaw = record.get(fieldNumber++);
+            String doctorName = record.get(fieldNumber++);
+
+            try {
+                assert doctorTable.verifyDetails(doctorIdRaw, doctorName);
+                doctorId = doctorTable.get(doctorIdRaw).getId();
+            } catch (AssertionError ae) {
+                throw new IllegalArgumentException(
+                        String.format(String.join("Invalid Doctor details at record %d: Doctor with DoctorId %s ",
+                                                  "was previously registered with different details."),
+                                      recordNumber, doctorIdRaw));
+            } catch (IllegalStateException ise) {
+                doctorTable.create(doctorIdRaw, doctorName);
+            }
+
+            /** Parsing Patient details */
+            String patientIdRaw = record.get(fieldNumber++);
+            String patientName = record.get(fieldNumber++);
+            String patientAgeRaw = record.get(fieldNumber++);
+            String patientGender = record.get(fieldNumber++);
+
+            int patientAge;
+            try {
+                patientAge = Integer.parseInt(patientAgeRaw);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException(
+                            String.format(String.join("Invalid Patient age at record %d: specified age %s ",
+                                                      "cannot be parsed to int."),
+                                          recordNumber, patientAgeRaw));
+            }
+
+            try {
+                assert patientTable.verifyDetails(patientIdRaw, patientName, patientAge, patientGender);
+                patientId = patientTable.get(patientIdRaw).getId();
+            } catch (AssertionError ae) {
+                throw new IllegalArgumentException(
+                        String.format(String.join("Invalid Patient details at record %d: Patient with PatientId %s ",
+                                                  "was previously registered with different details."),
+                                      recordNumber, patientIdRaw));
+            } catch (IllegalStateException ise) {
+                patientTable.create(patientIdRaw, patientName, patientAge, patientGender);
+            } catch (IllegalArgumentException iae) {
+                throw new IllegalArgumentException(
+                        String.format(String.join("Invalid Patient details at record %d: ",
+                                                  iae.getMessage()),
+                                      recordNumber));
+            }
+
+            String appointmentIdRaw = record.get(fieldNumber++);
+            String appointmentDateTimeRaw = record.get(fieldNumber++);
+
+            
+        }
+    }
+}
