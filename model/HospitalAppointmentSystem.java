@@ -5,8 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class HospitalAppointmentSystem {
     public static final String[] CONFIGURED_HEADER = {"doctor_id", "doctor_name",
@@ -50,6 +52,7 @@ public class HospitalAppointmentSystem {
                                                          "Appointment cannot be created:",
                                                          "Patient with PatientId %s does not exist."),
                                              patientIdRaw));
+            return;
         }
 
         try {
@@ -59,6 +62,7 @@ public class HospitalAppointmentSystem {
                                                          "Appointment cannot be created:",
                                                          "Doctor with DoctorId %s does not exist."),
                                              doctorIdRaw));
+            return;
         }
         
         PatientId patientId = patientTable.get(patientIdRaw).getId();
@@ -82,9 +86,11 @@ public class HospitalAppointmentSystem {
         appointmentTable.create(appointmentIdRaw, patientId, doctorId, dateRaw, timeRaw); 
         doctorIndexedAppointmentTable.add(doctorId,
                                           LocalDate.parse(dateRaw, Appointment.DATE_FORMATTER),
+                                          LocalTime.parse(dateRaw, Appointment.TIME_FORMATTER),
                                           new AppointmentId(appointmentIdRaw));
         patientIndexedAppointmentTable.add(patientId,
                                            LocalDate.parse(dateRaw, Appointment.DATE_FORMATTER),
+                                           LocalTime.parse(dateRaw, Appointment.TIME_FORMATTER),
                                            new AppointmentId(appointmentIdRaw));
     }
 
@@ -199,9 +205,10 @@ public class HospitalAppointmentSystem {
             Appointment appointment = appointmentTable.get(appointmentIdRaw);
             AppointmentId appointmentId = appointment.getAppointmentId();
             LocalDate appointmentDate = appointment.getDate();
+            LocalTime appointmentTime = appointment.getTime();
 
-            doctorIndexedAppointmentTable.add(doctorId, appointmentDate, appointmentId);
-            patientIndexedAppointmentTable.add(patientId, appointmentDate, appointmentId);
+            doctorIndexedAppointmentTable.add(doctorId, appointmentDate, appointmentTime, appointmentId);
+            patientIndexedAppointmentTable.add(patientId, appointmentDate, appointmentTime, appointmentId);
         }
     }
 }
