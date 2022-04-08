@@ -18,6 +18,13 @@ class IndexedAppointmentTable<T> {
     }
 
     void add(T id, LocalDate date, LocalTime time, AppointmentId appointmentId) {
+        if (table.get(id) == null) {
+            table.put(id, new HashMap<LocalDate, HashMap<LocalTime, AppointmentId>>());
+        }
+
+        if (table.get(id).get(date) == null) {
+            table.get(id).put(date, new HashMap<LocalTime, AppointmentId>());
+        }
         table.get(id).get(date).put(time, appointmentId);
     }
 

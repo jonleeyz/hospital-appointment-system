@@ -25,10 +25,11 @@ class Patient {
         if (age < 0) {
             throw new IllegalArgumentException(String.format("Specified age [%d] cannot be negative.", age));
         }
-        
-        if (gender == "M") {
+
+        if (gender.equals("M")) {
+            System.out.print("here");
             this.gender = Gender.M;
-        } else if (gender == "F") {
+        } else if (gender.equals("F")) {
             this.gender = Gender.F;
         } else {
             throw new IllegalArgumentException(
