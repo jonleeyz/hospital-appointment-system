@@ -1,10 +1,9 @@
 package model;
 
-final class AppointmentId {
-    protected String id;
+final class AppointmentId extends Id {
 
     protected AppointmentId(String id) {
-        this.id = id;
+        super(id);
     }
     
     @Override
@@ -19,10 +18,5 @@ final class AppointmentId {
         } else {
             return false;
         }
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
     }
 }
