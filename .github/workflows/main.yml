@@ -3,13 +3,13 @@ name: main
 on: [push]
 
 jobs:
-  build-and-test:
+  build-test-run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.0.0
       - name: Setup JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3.1.0
         with:
           distribution: 'zulu'
           java-version: '17'
@@ -17,16 +17,17 @@ jobs:
         run: 'mkdir out'
       - name: Build source
         run: 'javac -d out Driver.java -verbose'
-      - name: Build unit test suites
+      - name: Build unit tests
         run: 'javac -d out -cp "out:test/dependencies/junit-platform-console-standalone-1.8.2.jar"
               model/*UnitTest.java -verbose'
-      - name: Run unit test suites
+      - name: Run unit tests
         run: 'java -jar test/dependencies/junit-platform-console-standalone-1.8.2.jar -cp out
               --scan-classpath --details=tree --fail-if-no-tests --reports-dir="test/reports"'
-      - name: Publish test reports
-        uses: mikepenz/action-junit-report@v3
+      - name: Report test results
+        uses: mikepenz/action-junit-report@v3.0.1
         if: always()
         with:
           report_paths: 'test/reports/TEST-*.xml'
-      - name: Run source
+      - name: Run Driver with dummy.csv
         run: 'java -cp out Driver ./test/data/dummy.csv'
+  
