@@ -46,7 +46,8 @@ class HospitalAppointmentSystemUnitTest {
         for (List<String> wrongSchema: wrongSchemaList) {
             Exception e = assertThrows(IllegalArgumentException.class,
                                        () -> has1.verifyCsvSchema(wrongSchema));
-            assertEquals(String.join("CSV file is of incorrect format. ",
+            assertEquals(String.join(" ",
+                                     "CSV file is of incorrect format.",
                                      "See CONFIGURED_HEADER for correct schema."),
                          e.getMessage());
         }
@@ -56,6 +57,5 @@ class HospitalAppointmentSystemUnitTest {
     @Disabled
     @Test
     void populateFieldsWithStringsWorksCorrectly() {
-
     }
 }
