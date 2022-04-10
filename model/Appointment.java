@@ -6,6 +6,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import model.entities.id.AppointmentId;
+import model.entities.id.DoctorId;
+import model.entities.id.PatientId;
+
 class Appointment {
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");

@@ -5,6 +5,8 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
+import model.entities.id.AppointmentId;
+
 class IndexedAppointmentTable<T> {
     private HashMap<T, HashMap<LocalDate, HashMap<LocalTime, AppointmentId>>> table
         = new HashMap<T, HashMap<LocalDate, HashMap<LocalTime, AppointmentId>>>();

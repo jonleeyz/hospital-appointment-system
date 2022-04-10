@@ -2,6 +2,10 @@ package model;
 
 import java.util.HashMap;
 
+import model.entities.id.AppointmentId;
+import model.entities.id.DoctorId;
+import model.entities.id.PatientId;
+
 class AppointmentTable {
     private HashMap<AppointmentId, Appointment> table = new HashMap<AppointmentId, Appointment>();
     

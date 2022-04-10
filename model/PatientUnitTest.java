@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import model.entities.id.PatientId;
+
 class PatientUnitTest {
     private final String patient1IdRaw = "P1";
     private final String patient1Name = "Felicia Tan";

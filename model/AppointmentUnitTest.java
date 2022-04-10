@@ -13,6 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import model.entities.id.AppointmentId;
+import model.entities.id.DoctorId;
+import model.entities.id.PatientId;
+
 class AppointmentUnitTest {
     private final AppointmentId appointment1Id = new AppointmentId("A5");
     private final DoctorId doctor1Id = new DoctorId("A1");

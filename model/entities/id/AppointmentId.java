@@ -1,19 +1,18 @@
-package model;
+package model.entities.id;
 
-final class DoctorId extends Id {
-
-    protected DoctorId(String id) {
+public final class AppointmentId extends Id {
+    public AppointmentId(String id) {
         super(id);
     }
-
+    
     @Override
     public boolean equals(Object other) {
         if (other.getClass() != this.getClass()) {
             return false;
         }
 
-        DoctorId otherDoctorId = (DoctorId) other;
-        if (otherDoctorId.id.equals(this.id)) {
+        AppointmentId otherAppointmentId = (AppointmentId) other;
+        if (otherAppointmentId.id.equals(this.id)) {
             return true;
         } else {
             return false;

@@ -2,6 +2,8 @@ package model;
 
 import java.lang.IllegalArgumentException;
 
+import model.entities.id.PatientId;
+
 class Patient {
     enum Gender {
         M,

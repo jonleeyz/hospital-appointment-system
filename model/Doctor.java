@@ -1,5 +1,7 @@
 package model;
 
+import model.entities.id.DoctorId;
+
 class Doctor {
     private DoctorId id;
     private String name;

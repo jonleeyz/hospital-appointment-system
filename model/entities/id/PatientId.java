@@ -1,8 +1,7 @@
-package model;
+package model.entities.id;
 
-final class PatientId extends Id {
-
-    protected PatientId(String id) {
+public final class PatientId extends Id {
+    public PatientId(String id) {
         super(id);
     }
 

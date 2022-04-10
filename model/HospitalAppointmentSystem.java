@@ -8,6 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import model.entities.id.AppointmentId;
+import model.entities.id.DoctorId;
+import model.entities.id.PatientId;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 

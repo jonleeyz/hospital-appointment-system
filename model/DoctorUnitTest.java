@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
+import model.entities.id.DoctorId;
+
 class DoctorUnitTest {
     private final String doctor1IdRaw = "A1";
     private final String doctor1Name = "Max Ong";

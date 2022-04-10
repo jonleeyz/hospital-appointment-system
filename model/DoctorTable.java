@@ -2,6 +2,8 @@ package model;
 
 import java.util.HashMap;
 
+import model.entities.id.DoctorId;
+
 /**
  * A table that stores Doctor objects.
  * - Each Doctor is uniquely indexed by its respective DoctorId.

@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import model.entities.id.DoctorId;
+import model.entities.id.PatientId;
+
 class AppointmentTableUnitTest {
     private AppointmentTable table = null;
     private final String appointmentId1Raw = "A1";
