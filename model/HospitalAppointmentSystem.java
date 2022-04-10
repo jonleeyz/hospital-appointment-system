@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import model.entities.Appointment;
 import model.entities.id.AppointmentId;
 import model.entities.id.DoctorId;
 import model.entities.id.PatientId;

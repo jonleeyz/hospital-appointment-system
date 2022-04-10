@@ -2,6 +2,7 @@ package model;
 
 import java.util.HashMap;
 
+import model.entities.Appointment;
 import model.entities.id.AppointmentId;
 import model.entities.id.DoctorId;
 import model.entities.id.PatientId;

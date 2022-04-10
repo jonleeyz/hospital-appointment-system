@@ -2,6 +2,7 @@ package model;
 
 import java.util.HashMap;
 
+import model.entities.Patient;
 import model.entities.id.PatientId;
 
 /**

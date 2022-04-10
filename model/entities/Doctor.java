@@ -1,21 +1,21 @@
-package model;
+package model.entities;
 
 import model.entities.id.DoctorId;
 
-class Doctor {
+public final class Doctor {
     private DoctorId id;
     private String name;
 
-    protected Doctor(String id, String name) {
+    public Doctor(String id, String name) {
         this.id = new DoctorId(id);
         this.name = name;
     }
 
-    protected DoctorId getId() {
+    public DoctorId getId() {
         return id;
     }
 
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
@@ -46,6 +46,7 @@ class Doctor {
     }
 
     @Override
+    // TODO: implememt
     public String toString() {
         String output = String.format("");
 

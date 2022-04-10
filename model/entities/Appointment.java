@@ -1,4 +1,4 @@
-package model;
+package model.entities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,7 +10,7 @@ import model.entities.id.AppointmentId;
 import model.entities.id.DoctorId;
 import model.entities.id.PatientId;
 
-class Appointment {
+public final class Appointment {
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
     private static final Integer[] monthsWithout31stArray = {4, 6, 9, 11};
@@ -29,8 +29,8 @@ class Appointment {
      * - @throws IllegalArgumentException if a Created Date object specifies day 29 or above with month 2; adjusted
      *   for leap years.
      */
-    protected Appointment(AppointmentId appointmentId, PatientId patientId, DoctorId doctorId,
-                          String date, String time) throws IllegalArgumentException {
+    public Appointment(AppointmentId appointmentId, PatientId patientId, DoctorId doctorId,
+                       String date, String time) throws IllegalArgumentException {
         this.appointmentId = appointmentId;
         this.patientId = patientId;
         this.doctorId = doctorId;
@@ -57,27 +57,27 @@ class Appointment {
         }
     }
 
-    protected AppointmentId getAppointmentId() {
+    public AppointmentId getAppointmentId() {
         return appointmentId;
     }
 
-    protected PatientId getPatientId() {
+    public PatientId getPatientId() {
         return patientId;
     }
 
-    protected DoctorId getDoctorId() {
+    public DoctorId getDoctorId() {
         return doctorId;
     }
 
-    protected LocalDate getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    protected LocalTime getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    protected int getDuration() {
+    public int getDuration() {
         return duration;
     }
 
@@ -115,6 +115,7 @@ class Appointment {
     }
 
     @Override
+    // TODO: implememt
     public String toString() {
         String output = String.format("");
 
