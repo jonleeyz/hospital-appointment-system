@@ -13,6 +13,10 @@ import model.entities.Appointment;
 import model.entities.id.AppointmentId;
 import model.entities.id.DoctorId;
 import model.entities.id.PatientId;
+import model.tables.AppointmentTable;
+import model.tables.DoctorTable;
+import model.tables.IndexedAppointmentTable;
+import model.tables.PatientTable;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

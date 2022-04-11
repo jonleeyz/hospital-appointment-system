@@ -1,4 +1,4 @@
-package model;
+package model.tables;
 
 import java.util.HashMap;
 
@@ -10,11 +10,8 @@ import model.entities.id.DoctorId;
  * - Each Doctor is uniquely indexed by its respective DoctorId.
  * - 2 Doctors with different details cannot share the same DoctorId.
  */
-class DoctorTable {
+public class DoctorTable {
     private HashMap<DoctorId, Doctor> table = new HashMap<DoctorId, Doctor>();
-
-    DoctorTable() {
-    }
 
     boolean isEmpty() {
         return table.isEmpty();
@@ -23,14 +20,14 @@ class DoctorTable {
     /**
      * Checks if a Doctor with DoctorId doctorId exists in the table.
      */ 
-    boolean contains(String doctorId) {
+    public boolean contains(String doctorId) {
         return table.containsKey(new DoctorId(doctorId));
     }
 
     /**
      * Gets the Doctor with DoctorId doctorId.
      */ 
-    Doctor get(String doctorId) {
+    public Doctor get(String doctorId) {
         return table.get(new DoctorId(doctorId));
     }
 
@@ -38,7 +35,7 @@ class DoctorTable {
      * Creates a new Doctor entry.
      * - @throws IllegalStateException if a Doctor object with DoctorId doctorId already exists.
      */
-    void create(String doctorId, String doctorName) throws IllegalStateException {
+    public void create(String doctorId, String doctorName) throws IllegalStateException {
         if (contains(doctorId)) {
             throw new IllegalStateException(String.format("Doctor with DoctorId %s already exists.",
                                             doctorId));
@@ -52,7 +49,7 @@ class DoctorTable {
      * Verifies that the details provided are consistent with the Doctor in the table.
      * - @throws IllegalStateException if no Doctor object with DoctorId doctorId exists.
      */
-    boolean verifyDetails(String doctorId, String doctorName) throws IllegalStateException {
+    public boolean verifyDetails(String doctorId, String doctorName) throws IllegalStateException {
         Doctor dummyDoctor = new Doctor(doctorId, doctorName);
         try {
             return get(doctorId).equals(dummyDoctor);

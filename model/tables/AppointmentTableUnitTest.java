@@ -1,4 +1,4 @@
-package model;
+package model.tables;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import model.entities.id.DoctorId;
 import model.entities.id.PatientId;
 
-class AppointmentTableUnitTest {
+public class AppointmentTableUnitTest {
     private AppointmentTable table = null;
     private final String appointmentId1Raw = "A1";
     private final String appointmentId2Raw = "A2";

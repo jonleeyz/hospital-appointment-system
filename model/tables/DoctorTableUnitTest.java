@@ -1,4 +1,4 @@
-package model;
+package model.tables;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class DoctorTableUnitTest {
+public class DoctorTableUnitTest {
     private DoctorTable table = null;
     private final String doctorId1 = "D1";
     private final String doctorId2 = "D2";
