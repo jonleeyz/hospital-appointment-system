@@ -19,7 +19,7 @@ jobs:
         run: 'javac -d out Driver.java -verbose'
       - name: Build unit tests
         run: 'javac -d test/unit-tests -cp "out:test/dependencies/junit-platform-console-standalone-1.8.2.jar"
-              model/*UnitTest.java -verbose'
+              model/*/*UnitTest.java model/entities/id/*UnitTest.java -verbose'
       - name: Run unit tests
         run: 'java -jar test/dependencies/junit-platform-console-standalone-1.8.2.jar -cp "out:test/unit-tests"
               --scan-classpath --details=tree --fail-if-no-tests --reports-dir="test/unit-tests/reports"'
