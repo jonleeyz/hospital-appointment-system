@@ -18,9 +18,9 @@ import model.entities.id.DoctorId;
 import model.entities.id.PatientId;
 
 class AppointmentUnitTest {
-    private final AppointmentId appointment1Id = new AppointmentId("A5");
-    private final DoctorId doctor1Id = new DoctorId("A1");
-    private final PatientId patient1Id = new PatientId("B2");
+    private final String appointment1Id = "A5";
+    private final String doctor1Id = "A1";
+    private final String patient1Id = "B2";
     private final String date1Raw = "08032018";
     private final String time1Raw = "09:00:00";
     private final Appointment appointment1 = new Appointment(appointment1Id, patient1Id, doctor1Id,
@@ -75,9 +75,9 @@ class AppointmentUnitTest {
 
     @Test
     void equalsOverrideWorksCorrectlyTest() {
-        AppointmentId appointment2Id = new AppointmentId("X10");
-        DoctorId doctor2Id = new DoctorId("A10");
-        PatientId patient2Id = new PatientId("B5");
+        String appointment2Id = "X10";
+        String doctor2Id = "A10";
+        String patient2Id = "B5";
         String date2Raw = "08042018";
         String time2Raw = "10:00:00";
 
