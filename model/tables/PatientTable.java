@@ -32,31 +32,38 @@ public class PatientTable {
     }
 
     /**
-     * Creates a new Patient entry.
-     * - @throws IllegalStateException if a Patient object with PatientId patientId already exists.
-     */
-    public void create(String patientId, String patientName, int patientAge, String patientGender)
-        throws IllegalStateException {
-        if (contains(patientId)) {
-            throw new IllegalStateException(String.format("Patient with PatientId %s already exists.",
-                                            patientId));
-        }
-
-        table.put(new PatientId(patientId),
-                  new Patient(patientId, patientName, patientAge, patientGender));
-    }
-
-    /**
      * Verifies that the details provided are consistent with the Patient in the table.
      * - @throws IllegalStateException if no Patient object with PatientId patientId exists.
      */
     public boolean verifyDetails(String patientId, String patientName, int patientAge, String patientGender)
         throws IllegalStateException {
-        Patient dummyPatient = new Patient(patientId, patientName, patientAge, patientGender);
-        try {
-            return get(patientId).equals(dummyPatient);
-        } catch (NullPointerException e) {
-            throw new IllegalStateException(String.format("Patient with PatientId %s does not exist.", patientId));
+        if (contains(patientId)) {
+            return get(patientId).equals(new Patient(patientId, patientName, patientAge, patientGender));
+        } else {
+            throw new IllegalStateException(String.format("Patient with id %s does not exist.", patientId));
         }
+    }
+
+    /**
+     * Creates a new Patient entry if needed.
+     * - @throws IllegalStateException if a Patient object with PatientId patientId already exists abd the specified
+     *   method arguments do not match the existing entity's details.
+     */
+    public void put(String patientId, String patientName, int patientAge, String patientGender)
+        throws IllegalStateException {
+        if (!(verifyDetails(patientId, patientName, patientAge, patientGender))) {
+            Patient existingPatient = get(patientId);
+            throw new IllegalStateException(String.format(String.join(" ",
+                                                                      "Patient with id %s already exists,",
+                                                                      "with different details:",
+                                                                      "name (%s:%s), age (%s:%s), gender (%s:%s)"),
+                                                          patientId,
+                                                          existingPatient.getName(), patientName,
+                                                          existingPatient.getAge(), patientAge,
+                                                          existingPatient.getGender(), patientGender));
+        }
+
+        table.put(new PatientId(patientId),
+                  new Patient(patientId, patientName, patientAge, patientGender));
     }
 }

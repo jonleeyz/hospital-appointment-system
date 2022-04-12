@@ -32,29 +32,32 @@ public class DoctorTable {
     }
 
     /**
-     * Creates a new Doctor entry.
-     * - @throws IllegalStateException if a Doctor object with DoctorId doctorId already exists.
-     */
-    public void create(String doctorId, String doctorName) throws IllegalStateException {
-        if (contains(doctorId)) {
-            throw new IllegalStateException(String.format("Doctor with DoctorId %s already exists.",
-                                            doctorId));
-        }
-
-        table.put(new DoctorId(doctorId),
-                  new Doctor(doctorId, doctorName));
-    }
-
-    /**
      * Verifies that the details provided are consistent with the Doctor in the table.
      * - @throws IllegalStateException if no Doctor object with DoctorId doctorId exists.
      */
     public boolean verifyDetails(String doctorId, String doctorName) throws IllegalStateException {
-        Doctor dummyDoctor = new Doctor(doctorId, doctorName);
-        try {
-            return get(doctorId).equals(dummyDoctor);
-        } catch (NullPointerException e) {
-            throw new IllegalStateException(String.format("Doctor with DoctorId %s does not exist.", doctorId));
+        if (contains(doctorId)) {
+            return get(doctorId).equals(new Doctor(doctorId, doctorName));
+        } else {
+            throw new IllegalStateException(String.format("Doctor with id %s does not exist.", doctorId));
         }
+    }
+
+    /**
+     * Creates a new Doctor entry if needed.
+     * - @throws IllegalStateException if a Doctor object with DoctorId doctorId already exists and the specified 
+     *   method arguments do not match the existing entry's details.
+     */
+    public void put(String doctorId, String doctorName) throws IllegalStateException {
+        if (!(verifyDetails(doctorId, doctorName))) {
+            Doctor existingDoctor = get(doctorId);
+            throw new IllegalStateException(String.format(String.join(" ",
+                                                                      "Doctor with id %s already exists,",
+                                                                      "with different details: name (%s:%s)"),
+                                                          doctorId, existingDoctor.getName(), doctorName));
+        }
+
+        table.put(new DoctorId(doctorId),
+                  new Doctor(doctorId, doctorName));
     }
 }
