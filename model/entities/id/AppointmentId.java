@@ -1,10 +1,8 @@
-package model;
+package model.entities.id;
 
-final class AppointmentId {
-    protected String id;
-
-    protected AppointmentId(String id) {
-        this.id = id;
+public final class AppointmentId extends Id {
+    public AppointmentId(String id) {
+        super(id);
     }
     
     @Override
@@ -19,10 +17,5 @@ final class AppointmentId {
         } else {
             return false;
         }
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
     }
 }

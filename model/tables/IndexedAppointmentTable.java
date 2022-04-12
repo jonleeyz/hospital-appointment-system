@@ -1,23 +1,25 @@
-package model;
+package model.tables;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
-class IndexedAppointmentTable<T> {
+import model.entities.id.AppointmentId;
+
+public class IndexedAppointmentTable<T> {
     private HashMap<T, HashMap<LocalDate, HashMap<LocalTime, AppointmentId>>> table
         = new HashMap<T, HashMap<LocalDate, HashMap<LocalTime, AppointmentId>>>();
 
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return table.isEmpty();
     }
 
-    HashMap<LocalTime, AppointmentId> getAll(T id, LocalDate date) {
+    public HashMap<LocalTime, AppointmentId> getAll(T id, LocalDate date) {
         return table.get(id).get(date);
     }
 
-    void add(T id, LocalDate date, LocalTime time, AppointmentId appointmentId) {
+    public void add(T id, LocalDate date, LocalTime time, AppointmentId appointmentId) {
         if (table.get(id) == null) {
             table.put(id, new HashMap<LocalDate, HashMap<LocalTime, AppointmentId>>());
         }
@@ -28,7 +30,7 @@ class IndexedAppointmentTable<T> {
         table.get(id).get(date).put(time, appointmentId);
     }
 
-    void remove(T id, LocalDate date, LocalTime time, AppointmentId appointmentId) throws NoSuchElementException {
+    public void remove(T id, LocalDate date, LocalTime time, AppointmentId appointmentId) throws NoSuchElementException {
         if (table.get(id).get(date).get(time).equals(appointmentId)) {
             table.get(id).get(date).remove(time);
         } else {
@@ -37,11 +39,11 @@ class IndexedAppointmentTable<T> {
         }
     }
 
-    boolean contains(T id, LocalDate date, LocalTime time) {
+    public boolean contains(T id, LocalDate date, LocalTime time) {
         return table.get(id).get(date).get(time) != null;
     }
 
-    AppointmentId getAppointmentId(T id, LocalDate date, LocalTime time) throws NoSuchElementException {
+    public AppointmentId getAppointmentId(T id, LocalDate date, LocalTime time) throws NoSuchElementException {
         if (contains(id, date, time)) {
             return table.get(id).get(date).get(time);
         } else {

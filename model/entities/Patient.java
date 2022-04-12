@@ -1,8 +1,10 @@
-package model;
+package model.entities;
 
 import java.lang.IllegalArgumentException;
 
-class Patient {
+import model.entities.id.PatientId;
+
+public final class Patient {
     enum Gender {
         M,
         F
@@ -17,7 +19,7 @@ class Patient {
      * - @throws IllegalArgumentException if specified age is negative.
      * - @throws IllegalArgumentException if specified gender is not implemented.
      */
-    protected Patient(String id, String name, int age, String gender) throws IllegalArgumentException {
+    public Patient(String id, String name, int age, String gender) throws IllegalArgumentException {
         this.id = new PatientId(id);
         this.name = name;
         this.age = age;
@@ -27,7 +29,6 @@ class Patient {
         }
 
         if (gender.equals("M")) {
-            System.out.print("here");
             this.gender = Gender.M;
         } else if (gender.equals("F")) {
             this.gender = Gender.F;
@@ -37,19 +38,19 @@ class Patient {
         }
     }
 
-    protected PatientId getId() {
+    public PatientId getId() {
         return id;
     }
 
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
-    protected int getAge() {
+    public int getAge() {
         return age;
     }
 
-    protected Gender getGender() {
+    public Gender getGender() {
         return gender;
     }
 
@@ -84,6 +85,7 @@ class Patient {
     }
 
     @Override
+    // TODO: implememt
     public String toString() {
         String output = String.format("");
 

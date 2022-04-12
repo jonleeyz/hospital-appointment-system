@@ -8,6 +8,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import model.entities.Appointment;
+import model.entities.id.AppointmentId;
+import model.entities.id.DoctorId;
+import model.entities.id.PatientId;
+import model.tables.AppointmentTable;
+import model.tables.DoctorTable;
+import model.tables.IndexedAppointmentTable;
+import model.tables.PatientTable;
+import util.DateTimeParser;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -102,15 +113,12 @@ public class HospitalAppointmentSystem {
                                               appointmentIdIncomplete,
                                               Integer.toString(appointmentDayIndex));
 
-        appointmentTable.create(appointmentIdRaw, patientId, doctorId, dateRaw, timeRaw); 
-        doctorIndexedAppointmentTable.add(doctorId,
-                                          LocalDate.parse(dateRaw, Appointment.DATE_FORMATTER),
-                                          LocalTime.parse(dateRaw, Appointment.TIME_FORMATTER),
-                                          new AppointmentId(appointmentIdRaw));
-        patientIndexedAppointmentTable.add(patientId,
-                                           LocalDate.parse(dateRaw, Appointment.DATE_FORMATTER),
-                                           LocalTime.parse(dateRaw, Appointment.TIME_FORMATTER),
-                                           new AppointmentId(appointmentIdRaw));
+        LocalDate date = DateTimeParser.parseToDate(dateRaw);
+        LocalTime time = DateTimeParser.parseToTime(timeRaw);
+
+        appointmentTable.put(appointmentIdRaw, patientIdRaw, doctorIdRaw, dateRaw, timeRaw); 
+        doctorIndexedAppointmentTable.add(doctorId, date, time, new AppointmentId(appointmentIdRaw));
+        patientIndexedAppointmentTable.add(patientId, date, time, new AppointmentId(appointmentIdRaw));
     }
 
     public void cancelAppointment(String patientIdRaw, String doctorIdRaw, String dateAndTime) {
@@ -140,8 +148,8 @@ public class HospitalAppointmentSystem {
 
         DoctorId doctorId = doctorTable.get(doctorIdRaw).getId();
         PatientId patientId = patientTable.get(patientIdRaw).getId();
-        LocalDate date = LocalDate.parse(dateRaw, Appointment.DATE_FORMATTER);
-        LocalTime time = LocalTime.parse(timeRaw, Appointment.TIME_FORMATTER);
+        LocalDate date = DateTimeParser.parseToDate(dateRaw);
+        LocalTime time = DateTimeParser.parseToTime(timeRaw);
         AppointmentId appointmentId;
 
         try {
@@ -202,9 +210,9 @@ public class HospitalAppointmentSystem {
             String doctorName = record.get(fieldNumber++).trim();
 
             try {
-                doctorTable.create(doctorIdRaw, doctorName);
+                doctorTable.put(doctorIdRaw, doctorName);
             } catch (IllegalStateException ise) {
-                assert doctorTable.verifyDetails(doctorIdRaw, doctorName);
+                assert doctorTable.verifyRecord(doctorIdRaw, doctorName);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(
                         String.format(String.join(" ",
@@ -232,9 +240,9 @@ public class HospitalAppointmentSystem {
             }
 
             try {
-                patientTable.create(patientIdRaw, patientName, patientAge, patientGender);
+                patientTable.put(patientIdRaw, patientName, patientAge, patientGender);
             } catch (IllegalStateException ise) {
-                assert patientTable.verifyDetails(patientIdRaw, patientName, patientAge, patientGender);
+                assert patientTable.verifyRecord(patientIdRaw, patientName, patientAge, patientGender);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(
                         String.format(String.join(" ",
@@ -253,9 +261,9 @@ public class HospitalAppointmentSystem {
             String appointmentTimeRaw = appointmentDateTimeSplit[1];
 
             try {
-                appointmentTable.create(appointmentIdRaw, patientId, doctorId, appointmentDateRaw, appointmentTimeRaw);
+                appointmentTable.put(appointmentIdRaw, patientIdRaw, doctorIdRaw, appointmentDateRaw, appointmentTimeRaw);
             } catch (IllegalStateException ise) {
-                assert appointmentTable.verifyDetails(appointmentIdRaw, patientId, doctorId,
+                assert appointmentTable.verifyRecord(appointmentIdRaw, patientIdRaw, doctorIdRaw,
                                                       appointmentDateRaw, appointmentTimeRaw);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(

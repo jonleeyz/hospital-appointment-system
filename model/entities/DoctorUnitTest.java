@@ -1,9 +1,11 @@
-package model;
+package model.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
+
+import model.entities.id.DoctorId;
 
 class DoctorUnitTest {
     private final String doctor1IdRaw = "A1";

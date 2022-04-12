@@ -1,10 +1,8 @@
-package model;
+package model.entities.id;
 
-final class DoctorId {
-    protected String id;
-
-    protected DoctorId(String id) {
-        this.id = id;
+public final class DoctorId extends Id {
+    public DoctorId(String id) {
+        super(id);
     }
 
     @Override
@@ -19,10 +17,5 @@ final class DoctorId {
         } else {
             return false;
         }
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
     }
 }

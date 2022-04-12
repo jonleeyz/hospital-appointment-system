@@ -1,4 +1,4 @@
-package model;
+package model.entities;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,10 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import model.entities.id.*;
+
 class AppointmentUnitTest {
-    private final AppointmentId appointment1Id = new AppointmentId("A5");
-    private final DoctorId doctor1Id = new DoctorId("A1");
-    private final PatientId patient1Id = new PatientId("B2");
+    private final String appointment1Id = "A5";
+    private final String doctor1Id = "A1";
+    private final String patient1Id = "B2";
     private final String date1Raw = "08032018";
     private final String time1Raw = "09:00:00";
     private final Appointment appointment1 = new Appointment(appointment1Id, patient1Id, doctor1Id,
@@ -24,9 +26,9 @@ class AppointmentUnitTest {
 
     @Test
     void constructorWorksCorrectlyTest() {
-        assertEquals(appointment1.getAppointmentId(), appointment1Id);
-        assertEquals(appointment1.getDoctorId(), doctor1Id);
-        assertEquals(appointment1.getPatientId(), patient1Id);
+        assertEquals(appointment1.getAppointmentId(), new AppointmentId(appointment1Id));
+        assertEquals(appointment1.getDoctorId(), new DoctorId(doctor1Id));
+        assertEquals(appointment1.getPatientId(), new PatientId(patient1Id));
         assertEquals(appointment1.getDate(), LocalDate.of(2018, 3, 8));
         assertEquals(appointment1.getTime(), LocalTime.of(9, 0, 0));
         assertEquals(appointment1.getDuration(), 60);
@@ -71,9 +73,9 @@ class AppointmentUnitTest {
 
     @Test
     void equalsOverrideWorksCorrectlyTest() {
-        AppointmentId appointment2Id = new AppointmentId("X10");
-        DoctorId doctor2Id = new DoctorId("A10");
-        PatientId patient2Id = new PatientId("B5");
+        String appointment2Id = "X10";
+        String doctor2Id = "A10";
+        String patient2Id = "B5";
         String date2Raw = "08042018";
         String time2Raw = "10:00:00";
 
