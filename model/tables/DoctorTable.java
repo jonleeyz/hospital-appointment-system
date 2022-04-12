@@ -35,7 +35,7 @@ public class DoctorTable {
      * Verifies that the details provided are consistent with the Doctor in the table.
      * - @throws IllegalStateException if no Doctor object with DoctorId doctorId exists.
      */
-    public boolean verifyDetails(String doctorId, String doctorName) throws IllegalStateException {
+    public boolean verifyRecord(String doctorId, String doctorName) throws IllegalStateException {
         if (contains(doctorId)) {
             return get(doctorId).equals(new Doctor(doctorId, doctorName));
         } else {
@@ -49,15 +49,18 @@ public class DoctorTable {
      *   method arguments do not match the existing entry's details.
      */
     public void put(String doctorId, String doctorName) throws IllegalStateException {
-        if (!(verifyDetails(doctorId, doctorName))) {
-            Doctor existingDoctor = get(doctorId);
-            throw new IllegalStateException(String.format(String.join(" ",
-                                                                      "Doctor with id %s already exists,",
-                                                                      "with different details: name (%s:%s)"),
-                                                          doctorId, existingDoctor.getName(), doctorName));
+        try {
+            if (!(verifyRecord(doctorId, doctorName))) {
+                Doctor existingDoctor = get(doctorId);
+                throw new IllegalStateException(String.format(String.join(" ",
+                                                                          "Doctor with id %s already exists,",
+                                                                          "with different details: name (%s:%s)"),
+                                                              doctorId, existingDoctor.getName(), doctorName));
+            }
+        } catch (IllegalStateException ise) {
+            assert(String.format("Doctor with id %s does not exist.", doctorId).equals(ise.getMessage()));
         }
 
-        table.put(new DoctorId(doctorId),
-                  new Doctor(doctorId, doctorName));
+        table.put(new DoctorId(doctorId), new Doctor(doctorId, doctorName));
     }
 }

@@ -30,7 +30,7 @@ public class AppointmentTable {
      * Verifies that the details provided are consistent with the Appointment in the table.
      * - @throws IllegalStateException if no Appointment object with AppointmentId appointmentId exists.
      */
-    public boolean verifyDetails(String appointmentId, String patientId, String doctorId, String date, String time)
+    public boolean verifyRecord(String appointmentId, String patientId, String doctorId, String date, String time)
         throws IllegalArgumentException {
         if (contains(appointmentId)) {
             return get(appointmentId).equals(new Appointment(appointmentId, patientId, doctorId, date, time));
@@ -47,21 +47,24 @@ public class AppointmentTable {
      */
     public void put(String appointmentId, String patientId, String doctorId, String date, String time)
         throws IllegalStateException {
-        if (!(verifyDetails(appointmentId, patientId, doctorId, date, time))) {
-            Appointment existingAppointment = get(appointmentId);
-            throw new IllegalStateException(String.format(String.join(" ",
-                                                                      "Appointment with id %s already exists,",
-                                                                      "with different details:",
-                                                                      "patientId (%s:%s), doctorId (%s:%s),",
-                                                                      "date (%s:%s), time (%s:%s)"),
-                                                          appointmentId,
-                                                          existingAppointment.getDoctorId(), doctorId,
-                                                          existingAppointment.getPatientId(), patientId,
-                                                          existingAppointment.getDate(), date,
-                                                          existingAppointment.getTime(), time));
+        try {
+            if (!(verifyRecord(appointmentId, patientId, doctorId, date, time))) {
+                Appointment existingAppointment = get(appointmentId);
+                throw new IllegalStateException(String.format(String.join(" ",
+                                                                          "Appointment with id %s already exists,",
+                                                                          "with different details:",
+                                                                          "patientId (%s:%s), doctorId (%s:%s),",
+                                                                          "date (%s:%s), time (%s:%s)"),
+                                                              appointmentId,
+                                                              existingAppointment.getDoctorId(), doctorId,
+                                                              existingAppointment.getPatientId(), patientId,
+                                                              existingAppointment.getDate(), date,
+                                                              existingAppointment.getTime(), time));
+            }
+        } catch (IllegalStateException ise) {
+            assert(String.format("Appointment with id %s does not exist.", appointmentId).equals(ise.getMessage()));
         }
 
-        table.put(new AppointmentId(appointmentId),
-                  new Appointment(appointmentId, patientId, doctorId, date, time));
+        table.put(new AppointmentId(appointmentId), new Appointment(appointmentId, patientId, doctorId, date, time));
     }
 }

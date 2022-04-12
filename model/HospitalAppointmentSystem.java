@@ -212,7 +212,7 @@ public class HospitalAppointmentSystem {
             try {
                 doctorTable.put(doctorIdRaw, doctorName);
             } catch (IllegalStateException ise) {
-                assert doctorTable.verifyDetails(doctorIdRaw, doctorName);
+                assert doctorTable.verifyRecord(doctorIdRaw, doctorName);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(
                         String.format(String.join(" ",
@@ -242,7 +242,7 @@ public class HospitalAppointmentSystem {
             try {
                 patientTable.put(patientIdRaw, patientName, patientAge, patientGender);
             } catch (IllegalStateException ise) {
-                assert patientTable.verifyDetails(patientIdRaw, patientName, patientAge, patientGender);
+                assert patientTable.verifyRecord(patientIdRaw, patientName, patientAge, patientGender);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(
                         String.format(String.join(" ",
@@ -263,7 +263,7 @@ public class HospitalAppointmentSystem {
             try {
                 appointmentTable.put(appointmentIdRaw, patientIdRaw, doctorIdRaw, appointmentDateRaw, appointmentTimeRaw);
             } catch (IllegalStateException ise) {
-                assert appointmentTable.verifyDetails(appointmentIdRaw, patientIdRaw, doctorIdRaw,
+                assert appointmentTable.verifyRecord(appointmentIdRaw, patientIdRaw, doctorIdRaw,
                                                       appointmentDateRaw, appointmentTimeRaw);
             } catch (AssertionError ae) {
                 throw new IllegalArgumentException(

@@ -32,34 +32,34 @@ class AppointmentTableUnitTest {
     }
 
     @Test
-    void verifyDetailsWorksCorrectly() {
+    void verifyRecordWorksCorrectly() {
         assertTrue(table.isEmpty());
 
         table.put(appointmentId1, patientId1, doctorId1, date1, time1);
-        assertTrue(table.verifyDetails(appointmentId1, patientId1, doctorId1, date1, time1));
-        assertFalse(table.verifyDetails(appointmentId1, patientId2, doctorId1, date1, time1));
-        assertFalse(table.verifyDetails(appointmentId1, patientId1, doctorId2, date1, time1));
-        assertFalse(table.verifyDetails(appointmentId1, patientId1, doctorId1, date2, time1));
-        assertFalse(table.verifyDetails(appointmentId1, patientId1, doctorId1, date1, time2));
+        assertTrue(table.verifyRecord(appointmentId1, patientId1, doctorId1, date1, time1));
+        assertFalse(table.verifyRecord(appointmentId1, patientId2, doctorId1, date1, time1));
+        assertFalse(table.verifyRecord(appointmentId1, patientId1, doctorId2, date1, time1));
+        assertFalse(table.verifyRecord(appointmentId1, patientId1, doctorId1, date2, time1));
+        assertFalse(table.verifyRecord(appointmentId1, patientId1, doctorId1, date1, time2));
         Exception e1 = assertThrows(IllegalStateException.class,
-                                    () -> table.verifyDetails(appointmentId2, patientId1, doctorId1, date1, time1));
+                                    () -> table.verifyRecord(appointmentId2, patientId1, doctorId1, date1, time1));
         assertEquals(String.format("Appointment with id %s does not exist.", appointmentId2), e1.getMessage());
         Exception e2 = assertThrows(IllegalStateException.class,
-                                    () -> table.verifyDetails(appointmentId2, patientId2, doctorId2, date2, time2));
+                                    () -> table.verifyRecord(appointmentId2, patientId2, doctorId2, date2, time2));
         assertEquals(String.format("Appointment with id %s does not exist.", appointmentId2), e2.getMessage());
 
         table.put(appointmentId2, patientId2, doctorId2, date2, time2);
-        assertTrue(table.verifyDetails(appointmentId2, patientId2, doctorId2, date2, time2));
-        assertFalse(table.verifyDetails(appointmentId2, patientId1, doctorId2, date2, time2));
-        assertFalse(table.verifyDetails(appointmentId2, patientId2, doctorId1, date2, time2));
-        assertFalse(table.verifyDetails(appointmentId2, patientId2, doctorId2, date1, time2));
-        assertFalse(table.verifyDetails(appointmentId2, patientId2, doctorId2, date2, time1));
+        assertTrue(table.verifyRecord(appointmentId2, patientId2, doctorId2, date2, time2));
+        assertFalse(table.verifyRecord(appointmentId2, patientId1, doctorId2, date2, time2));
+        assertFalse(table.verifyRecord(appointmentId2, patientId2, doctorId1, date2, time2));
+        assertFalse(table.verifyRecord(appointmentId2, patientId2, doctorId2, date1, time2));
+        assertFalse(table.verifyRecord(appointmentId2, patientId2, doctorId2, date2, time1));
         String appointmentId3 = "A3";
         Exception e3 = assertThrows(IllegalStateException.class,
-                                    () -> table.verifyDetails(appointmentId3, patientId1, doctorId1, date1, time1));
+                                    () -> table.verifyRecord(appointmentId3, patientId1, doctorId1, date1, time1));
         assertEquals(String.format("Appointment with id %s does not exist.", appointmentId3), e3.getMessage());
         Exception e4 = assertThrows(IllegalStateException.class,
-                                    () -> table.verifyDetails(appointmentId3, patientId2, doctorId2, date2, time2));
+                                    () -> table.verifyRecord(appointmentId3, patientId2, doctorId2, date2, time2));
         assertEquals(String.format("Appointment with id %s does not exist.", appointmentId3), e4.getMessage());
     }
 

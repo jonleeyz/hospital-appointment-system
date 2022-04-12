@@ -35,7 +35,7 @@ public class PatientTable {
      * Verifies that the details provided are consistent with the Patient in the table.
      * - @throws IllegalStateException if no Patient object with PatientId patientId exists.
      */
-    public boolean verifyDetails(String patientId, String patientName, int patientAge, String patientGender)
+    public boolean verifyRecord(String patientId, String patientName, int patientAge, String patientGender)
         throws IllegalStateException {
         if (contains(patientId)) {
             return get(patientId).equals(new Patient(patientId, patientName, patientAge, patientGender));
@@ -51,19 +51,22 @@ public class PatientTable {
      */
     public void put(String patientId, String patientName, int patientAge, String patientGender)
         throws IllegalStateException {
-        if (!(verifyDetails(patientId, patientName, patientAge, patientGender))) {
-            Patient existingPatient = get(patientId);
-            throw new IllegalStateException(String.format(String.join(" ",
-                                                                      "Patient with id %s already exists,",
-                                                                      "with different details:",
-                                                                      "name (%s:%s), age (%s:%s), gender (%s:%s)"),
-                                                          patientId,
-                                                          existingPatient.getName(), patientName,
-                                                          existingPatient.getAge(), patientAge,
-                                                          existingPatient.getGender(), patientGender));
+        try {
+            if (!(verifyRecord(patientId, patientName, patientAge, patientGender))) {
+                Patient existingPatient = get(patientId);
+                throw new IllegalStateException(String.format(String.join(" ",
+                                                                          "Patient with id %s already exists,",
+                                                                          "with different details:",
+                                                                          "name (%s:%s), age (%s:%s), gender (%s:%s)"),
+                                                              patientId,
+                                                              existingPatient.getName(), patientName,
+                                                              existingPatient.getAge(), patientAge,
+                                                              existingPatient.getGender(), patientGender));
+            }
+        } catch (IllegalStateException ise) {
+            assert(String.format("Patient with id %s does not exist.", patientId).equals(ise.getMessage()));
         }
 
-        table.put(new PatientId(patientId),
-                  new Patient(patientId, patientName, patientAge, patientGender));
+        table.put(new PatientId(patientId), new Patient(patientId, patientName, patientAge, patientGender));
     }
 }

@@ -30,32 +30,32 @@ class PatientTableUnitTest {
     }
 
     @Test
-    void verifyDetailsWorksCorrectly() {
+    void verifyRecordWorksCorrectly() {
         assertTrue(table.isEmpty());
 
         table.put(patientId1, patientName1, patientAge1, patientGender1);
-        assertTrue(table.verifyDetails(patientId1, patientName1, patientAge1, patientGender1));
-        assertFalse(table.verifyDetails(patientId1, patientName2, patientAge1, patientGender1));
-        assertFalse(table.verifyDetails(patientId1, patientName1, patientAge2, patientGender1));
-        assertFalse(table.verifyDetails(patientId1, patientName1, patientAge1, patientGender2));
+        assertTrue(table.verifyRecord(patientId1, patientName1, patientAge1, patientGender1));
+        assertFalse(table.verifyRecord(patientId1, patientName2, patientAge1, patientGender1));
+        assertFalse(table.verifyRecord(patientId1, patientName1, patientAge2, patientGender1));
+        assertFalse(table.verifyRecord(patientId1, patientName1, patientAge1, patientGender2));
         Exception e1 = assertThrows(IllegalStateException.class,
-                                    () -> table.verifyDetails(patientId2, patientName1, patientAge1, patientGender1));
+                                    () -> table.verifyRecord(patientId2, patientName1, patientAge1, patientGender1));
         assertEquals(String.format("Patient with id %s does not exist.", patientId2), e1.getMessage());
         Exception e2 = assertThrows(IllegalStateException.class,
-                                    () -> table.verifyDetails(patientId2, patientName2, patientAge2, patientGender2));
+                                    () -> table.verifyRecord(patientId2, patientName2, patientAge2, patientGender2));
         assertEquals(String.format("Patient with id %s does not exist.", patientId2), e2.getMessage());
 
         table.put(patientId2, patientName2, patientAge2, patientGender2);
-        assertTrue(table.verifyDetails(patientId2, patientName2, patientAge2, patientGender2));
-        assertFalse(table.verifyDetails(patientId2, patientName1, patientAge2, patientGender2));
-        assertFalse(table.verifyDetails(patientId2, patientName2, patientAge1, patientGender2));
-        assertFalse(table.verifyDetails(patientId2, patientName2, patientAge2, patientGender1));
+        assertTrue(table.verifyRecord(patientId2, patientName2, patientAge2, patientGender2));
+        assertFalse(table.verifyRecord(patientId2, patientName1, patientAge2, patientGender2));
+        assertFalse(table.verifyRecord(patientId2, patientName2, patientAge1, patientGender2));
+        assertFalse(table.verifyRecord(patientId2, patientName2, patientAge2, patientGender1));
         String patientId3 = "P3";
         Exception e3 = assertThrows(IllegalStateException.class,
-                                    () -> table.verifyDetails(patientId3, patientName1, patientAge1, patientGender1));
+                                    () -> table.verifyRecord(patientId3, patientName1, patientAge1, patientGender1));
         assertEquals(String.format("Patient with id %s does not exist.", patientId3), e3.getMessage());
         Exception e4 = assertThrows(IllegalStateException.class,
-                                    () -> table.verifyDetails(patientId3, patientName2, patientAge2, patientGender2));
+                                    () -> table.verifyRecord(patientId3, patientName2, patientAge2, patientGender2));
         assertEquals(String.format("Patient with id %s does not exist.", patientId3), e4.getMessage());
     }
 
