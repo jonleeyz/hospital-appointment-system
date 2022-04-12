@@ -1,6 +1,6 @@
 package model.entities.id;
 
-abstract class Id {
+public abstract class Id {
     protected String id;
 
     protected Id(String id) {
