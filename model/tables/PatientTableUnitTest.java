@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class PatientTableUnitTest {
+class PatientTableUnitTest {
     private PatientTable table = null;
     private final String patientId1 = "P1";
     private final String patientId2 = "P2";
@@ -30,56 +30,77 @@ public class PatientTableUnitTest {
     }
 
     @Test
-    void createWorksCorrectly() {
-        assertFalse(table.contains(patientId1));
-
-        table.create(patientId1, patientName1, patientAge1, patientGender1);
-        assertTrue(table.contains(patientId1));
-        assertFalse(table.contains(patientId2));
-        Exception e1 = assertThrows(IllegalStateException.class,
-                                    () -> table.create(patientId1, patientName1, patientAge1, patientGender1));
-        assertEquals(String.format("Patient with PatientId %s already exists.", patientId1),
-                     e1.getMessage());
-
-        table.create(patientId2, patientName2, patientAge2, patientGender2);
-        assertTrue(table.contains(patientId1));
-        assertTrue(table.contains(patientId2));
-        Exception e2 = assertThrows(IllegalStateException.class,
-                                    () -> table.create(patientId2, patientName2, patientAge2, patientGender2));
-        assertEquals(String.format("Patient with PatientId %s already exists.", patientId2),
-                     e2.getMessage());
-    }
-
-    @Test
     void verifyDetailsWorksCorrectly() {
-        table.create(patientId1, patientName1, patientAge1, patientGender1);
+        assertTrue(table.isEmpty());
+
+        table.put(patientId1, patientName1, patientAge1, patientGender1);
         assertTrue(table.verifyDetails(patientId1, patientName1, patientAge1, patientGender1));
         assertFalse(table.verifyDetails(patientId1, patientName2, patientAge1, patientGender1));
         assertFalse(table.verifyDetails(patientId1, patientName1, patientAge2, patientGender1));
         assertFalse(table.verifyDetails(patientId1, patientName1, patientAge1, patientGender2));
         Exception e1 = assertThrows(IllegalStateException.class,
                                     () -> table.verifyDetails(patientId2, patientName1, patientAge1, patientGender1));
-        assertEquals(String.format("Patient with PatientId %s does not exist.", patientId2),
-                     e1.getMessage());
+        assertEquals(String.format("Patient with id %s does not exist.", patientId2), e1.getMessage());
         Exception e2 = assertThrows(IllegalStateException.class,
                                     () -> table.verifyDetails(patientId2, patientName2, patientAge2, patientGender2));
-        assertEquals(String.format("Patient with PatientId %s does not exist.", patientId2),
-                     e2.getMessage());
+        assertEquals(String.format("Patient with id %s does not exist.", patientId2), e2.getMessage());
 
-        table.create(patientId2, patientName2, patientAge2, patientGender2);
+        table.put(patientId2, patientName2, patientAge2, patientGender2);
         assertTrue(table.verifyDetails(patientId2, patientName2, patientAge2, patientGender2));
         assertFalse(table.verifyDetails(patientId2, patientName1, patientAge2, patientGender2));
         assertFalse(table.verifyDetails(patientId2, patientName2, patientAge1, patientGender2));
         assertFalse(table.verifyDetails(patientId2, patientName2, patientAge2, patientGender1));
-
         String patientId3 = "P3";
         Exception e3 = assertThrows(IllegalStateException.class,
                                     () -> table.verifyDetails(patientId3, patientName1, patientAge1, patientGender1));
-        assertEquals(String.format("Patient with PatientId %s does not exist.", patientId3),
-                     e3.getMessage());
+        assertEquals(String.format("Patient with id %s does not exist.", patientId3), e3.getMessage());
         Exception e4 = assertThrows(IllegalStateException.class,
                                     () -> table.verifyDetails(patientId3, patientName2, patientAge2, patientGender2));
-        assertEquals(String.format("Patient with PatientId %s does not exist.", patientId3),
-                     e4.getMessage());
+        assertEquals(String.format("Patient with id %s does not exist.", patientId3), e4.getMessage());
+    }
+
+    @Test
+    void putWorksCorrectly() {
+        assertTrue(table.isEmpty());
+
+        // put patient1
+        table.put(patientId1, patientName1, patientAge1, patientGender1);
+        assertTrue(table.contains(patientId1));
+        assertFalse(table.contains(patientId2));
+
+        // put patient1 again
+        table.put(patientId1, patientName1, patientAge1, patientGender1);
+        assertTrue(table.contains(patientId1));
+        assertFalse(table.contains(patientId2));
+
+        // put patient1 with non-matching details
+        Exception e1 = assertThrows(IllegalStateException.class,
+                                    () -> table.put(patientId1, patientName2, patientAge1, patientGender1));
+        assertEquals(String.format(String.join(" ",
+                                               "Patient with id %s already exists with different details:",
+                                               "name (%s:%s), age (%s:%s), gender (%s:%s)"),
+                                   patientId1, patientName1, patientName2,
+                                   patientAge1, patientAge1, patientGender1, patientGender1),
+                     e1.getMessage());
+
+        // put patient2
+        table.put(patientId2, patientName2, patientAge2, patientGender2);
+        assertTrue(table.contains(patientId1));
+        assertTrue(table.contains(patientId2));
+
+        // put patient2 again
+        table.put(patientId2, patientName2, patientAge2, patientGender2);
+        assertTrue(table.contains(patientId1));
+        assertTrue(table.contains(patientId2));
+
+        // put patient2 with non-matching details
+        Exception e2 = assertThrows(IllegalStateException.class,
+                                    () -> table.put(patientId2, patientName1, patientAge2, patientGender2));
+        assertEquals(String.format(String.join(" ",
+                                               "Patient with id %s already exists with different details:",
+                                               "name (%s:%s), age (%s:%s), gender (%s:%s)"),
+                                   patientId2, patientName2, patientName1,
+                                   patientAge2, patientAge2, patientGender2, patientGender2),
+                     e2.getMessage());
     }
 }
