@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import model.entities.Appointment;
 import model.entities.id.AppointmentId;
+import util.DateTimeParser;
 
 public class AppointmentTable {
     private HashMap<AppointmentId, Appointment> table = new HashMap<AppointmentId, Appointment>();
@@ -49,16 +50,17 @@ public class AppointmentTable {
         try {
             if (!(verifyRecord(appointmentId, patientId, doctorId, date, time))) {
                 Appointment existingAppointment = get(appointmentId);
-                throw new IllegalStateException(String.format(String.join(" ",
-                                                                          "Appointment with id %s already exists",
-                                                                          "with different details:",
-                                                                          "patientId (%s:%s), doctorId (%s:%s),",
-                                                                          "date (%s:%s), time (%s:%s)"),
-                                                              appointmentId,
-                                                              existingAppointment.getDoctorId(), doctorId,
-                                                              existingAppointment.getPatientId(), patientId,
-                                                              existingAppointment.getDate(), date,
-                                                              existingAppointment.getTime(), time));
+                throw new IllegalStateException(String.format(
+                                                String.join(" ",
+                                                            "Appointment with id %s already exists",
+                                                            "with different details:",
+                                                            "patientId (%s:%s), doctorId (%s:%s),",
+                                                            "date (%s:%s), time (%s:%s)"),
+                                                appointmentId,
+                                                existingAppointment.getDoctorId(), doctorId,
+                                                existingAppointment.getPatientId(), patientId,
+                                                DateTimeParser.convertToString(existingAppointment.getDate()), date,
+                                                DateTimeParser.convertToString(existingAppointment.getTime()), time));
             }
         } catch (IllegalArgumentException iae) {
             assert(String.format("Appointment with id %s does not exist.", appointmentId).equals(iae.getMessage()));
