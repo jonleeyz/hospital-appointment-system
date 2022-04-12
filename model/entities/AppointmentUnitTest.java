@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import model.entities.id.*;
+
 class AppointmentUnitTest {
     private final String appointment1Id = "A5";
     private final String doctor1Id = "A1";
@@ -24,9 +26,9 @@ class AppointmentUnitTest {
 
     @Test
     void constructorWorksCorrectlyTest() {
-        assertEquals(appointment1.getAppointmentId(), appointment1Id);
-        assertEquals(appointment1.getDoctorId(), doctor1Id);
-        assertEquals(appointment1.getPatientId(), patient1Id);
+        assertEquals(appointment1.getAppointmentId(), new AppointmentId(appointment1Id));
+        assertEquals(appointment1.getDoctorId(), new DoctorId(doctor1Id));
+        assertEquals(appointment1.getPatientId(), new PatientId(patient1Id));
         assertEquals(appointment1.getDate(), LocalDate.of(2018, 3, 8));
         assertEquals(appointment1.getTime(), LocalTime.of(9, 0, 0));
         assertEquals(appointment1.getDuration(), 60);

@@ -50,7 +50,7 @@ public class AppointmentTable {
             if (!(verifyRecord(appointmentId, patientId, doctorId, date, time))) {
                 Appointment existingAppointment = get(appointmentId);
                 throw new IllegalStateException(String.format(String.join(" ",
-                                                                          "Appointment with id %s already exists,",
+                                                                          "Appointment with id %s already exists",
                                                                           "with different details:",
                                                                           "patientId (%s:%s), doctorId (%s:%s),",
                                                                           "date (%s:%s), time (%s:%s)"),

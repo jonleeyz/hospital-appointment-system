@@ -55,7 +55,7 @@ public class PatientTable {
             if (!(verifyRecord(patientId, patientName, patientAge, patientGender))) {
                 Patient existingPatient = get(patientId);
                 throw new IllegalStateException(String.format(String.join(" ",
-                                                                          "Patient with id %s already exists,",
+                                                                          "Patient with id %s already exists",
                                                                           "with different details:",
                                                                           "name (%s:%s), age (%s:%s), gender (%s:%s)"),
                                                               patientId,

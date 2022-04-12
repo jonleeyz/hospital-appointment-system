@@ -53,7 +53,7 @@ public class DoctorTable {
             if (!(verifyRecord(doctorId, doctorName))) {
                 Doctor existingDoctor = get(doctorId);
                 throw new IllegalStateException(String.format(String.join(" ",
-                                                                          "Doctor with id %s already exists,",
+                                                                          "Doctor with id %s already exists",
                                                                           "with different details: name (%s:%s)"),
                                                               doctorId, existingDoctor.getName(), doctorName));
             }
