@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   build-test-run:
+    name: Build, test & run
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,12 +23,12 @@ jobs:
               model/*/*UnitTest.java model/entities/id/*UnitTest.java -verbose'
       - name: Run unit tests
         run: 'java -jar test/dependencies/junit-platform-console-standalone-1.8.2.jar -cp "out:test/unit-tests"
-              --scan-classpath --details=tree --fail-if-no-tests --reports-dir="test/unit-tests/reports"'
+              --scan-classpath --details=tree --fail-if-no-tests --reports-dir="test/reports/unit-tests"'
       - name: Report unit test results
         uses: mikepenz/action-junit-report@v3.0.1
         if: always()
         with:
-          report_paths: 'test/unit-tests/reports/TEST-*.xml'
+          report_paths: 'test/reports/unit-tests/TEST-*.xml'
           check_name: "report-unit-test-results"
       - name: Run Driver with dummy.csv
         run: 'java -cp out Driver ./test/data/dummy.csv'
