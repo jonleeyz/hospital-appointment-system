@@ -29,7 +29,6 @@ public final class Patient {
         }
 
         if (gender.equals("M")) {
-            System.out.print("here");
             this.gender = Gender.M;
         } else if (gender.equals("F")) {
             this.gender = Gender.F;
