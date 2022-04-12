@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build-test-run:
-    name: Build, test & run
+    name: Build, test, run
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,7 +29,7 @@ jobs:
         if: always()
         with:
           report_paths: 'test/reports/unit-tests/TEST-*.xml'
-          check_name: "report-unit-test-results"
+          check_name: "Report unit test results"
       - name: Run Driver with dummy.csv
         run: 'java -cp out Driver ./test/data/dummy.csv'
   
