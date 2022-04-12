@@ -38,10 +38,10 @@ class PatientTableUnitTest {
         assertFalse(table.verifyRecord(patientId1, patientName2, patientAge1, patientGender1));
         assertFalse(table.verifyRecord(patientId1, patientName1, patientAge2, patientGender1));
         assertFalse(table.verifyRecord(patientId1, patientName1, patientAge1, patientGender2));
-        Exception e1 = assertThrows(IllegalStateException.class,
+        Exception e1 = assertThrows(IllegalArgumentException.class,
                                     () -> table.verifyRecord(patientId2, patientName1, patientAge1, patientGender1));
         assertEquals(String.format("Patient with id %s does not exist.", patientId2), e1.getMessage());
-        Exception e2 = assertThrows(IllegalStateException.class,
+        Exception e2 = assertThrows(IllegalArgumentException.class,
                                     () -> table.verifyRecord(patientId2, patientName2, patientAge2, patientGender2));
         assertEquals(String.format("Patient with id %s does not exist.", patientId2), e2.getMessage());
 
@@ -51,10 +51,10 @@ class PatientTableUnitTest {
         assertFalse(table.verifyRecord(patientId2, patientName2, patientAge1, patientGender2));
         assertFalse(table.verifyRecord(patientId2, patientName2, patientAge2, patientGender1));
         String patientId3 = "P3";
-        Exception e3 = assertThrows(IllegalStateException.class,
+        Exception e3 = assertThrows(IllegalArgumentException.class,
                                     () -> table.verifyRecord(patientId3, patientName1, patientAge1, patientGender1));
         assertEquals(String.format("Patient with id %s does not exist.", patientId3), e3.getMessage());
-        Exception e4 = assertThrows(IllegalStateException.class,
+        Exception e4 = assertThrows(IllegalArgumentException.class,
                                     () -> table.verifyRecord(patientId3, patientName2, patientAge2, patientGender2));
         assertEquals(String.format("Patient with id %s does not exist.", patientId3), e4.getMessage());
     }

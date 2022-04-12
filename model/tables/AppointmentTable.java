@@ -28,15 +28,14 @@ public class AppointmentTable {
 
     /**
      * Verifies that the details provided are consistent with the Appointment in the table.
-     * - @throws IllegalStateException if no Appointment object with AppointmentId appointmentId exists.
+     * - @throws IllegalArgumentException if no Appointment object with AppointmentId appointmentId exists.
      */
     public boolean verifyRecord(String appointmentId, String patientId, String doctorId, String date, String time)
         throws IllegalArgumentException {
         if (contains(appointmentId)) {
             return get(appointmentId).equals(new Appointment(appointmentId, patientId, doctorId, date, time));
         } else {
-            throw new IllegalStateException(String.format("Appointment with id %s does not exist.",
-                                                             appointmentId));
+            throw new IllegalArgumentException(String.format("Appointment with id %s does not exist.", appointmentId));
         }
     }
 
@@ -61,8 +60,8 @@ public class AppointmentTable {
                                                               existingAppointment.getDate(), date,
                                                               existingAppointment.getTime(), time));
             }
-        } catch (IllegalStateException ise) {
-            assert(String.format("Appointment with id %s does not exist.", appointmentId).equals(ise.getMessage()));
+        } catch (IllegalArgumentException iae) {
+            assert(String.format("Appointment with id %s does not exist.", appointmentId).equals(iae.getMessage()));
         }
 
         table.put(new AppointmentId(appointmentId), new Appointment(appointmentId, patientId, doctorId, date, time));

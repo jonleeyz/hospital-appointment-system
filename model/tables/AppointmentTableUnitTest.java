@@ -41,10 +41,10 @@ class AppointmentTableUnitTest {
         assertFalse(table.verifyRecord(appointmentId1, patientId1, doctorId2, date1, time1));
         assertFalse(table.verifyRecord(appointmentId1, patientId1, doctorId1, date2, time1));
         assertFalse(table.verifyRecord(appointmentId1, patientId1, doctorId1, date1, time2));
-        Exception e1 = assertThrows(IllegalStateException.class,
+        Exception e1 = assertThrows(IllegalArgumentException.class,
                                     () -> table.verifyRecord(appointmentId2, patientId1, doctorId1, date1, time1));
         assertEquals(String.format("Appointment with id %s does not exist.", appointmentId2), e1.getMessage());
-        Exception e2 = assertThrows(IllegalStateException.class,
+        Exception e2 = assertThrows(IllegalArgumentException.class,
                                     () -> table.verifyRecord(appointmentId2, patientId2, doctorId2, date2, time2));
         assertEquals(String.format("Appointment with id %s does not exist.", appointmentId2), e2.getMessage());
 
@@ -55,10 +55,10 @@ class AppointmentTableUnitTest {
         assertFalse(table.verifyRecord(appointmentId2, patientId2, doctorId2, date1, time2));
         assertFalse(table.verifyRecord(appointmentId2, patientId2, doctorId2, date2, time1));
         String appointmentId3 = "A3";
-        Exception e3 = assertThrows(IllegalStateException.class,
+        Exception e3 = assertThrows(IllegalArgumentException.class,
                                     () -> table.verifyRecord(appointmentId3, patientId1, doctorId1, date1, time1));
         assertEquals(String.format("Appointment with id %s does not exist.", appointmentId3), e3.getMessage());
-        Exception e4 = assertThrows(IllegalStateException.class,
+        Exception e4 = assertThrows(IllegalArgumentException.class,
                                     () -> table.verifyRecord(appointmentId3, patientId2, doctorId2, date2, time2));
         assertEquals(String.format("Appointment with id %s does not exist.", appointmentId3), e4.getMessage());
     }

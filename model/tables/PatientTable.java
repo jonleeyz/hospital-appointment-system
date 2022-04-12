@@ -33,14 +33,14 @@ public class PatientTable {
 
     /**
      * Verifies that the details provided are consistent with the Patient in the table.
-     * - @throws IllegalStateException if no Patient object with PatientId patientId exists.
+     * - @throws IllegalArgumentException if no Patient object with PatientId patientId exists.
      */
     public boolean verifyRecord(String patientId, String patientName, int patientAge, String patientGender)
-        throws IllegalStateException {
+        throws IllegalArgumentException {
         if (contains(patientId)) {
             return get(patientId).equals(new Patient(patientId, patientName, patientAge, patientGender));
         } else {
-            throw new IllegalStateException(String.format("Patient with id %s does not exist.", patientId));
+            throw new IllegalArgumentException(String.format("Patient with id %s does not exist.", patientId));
         }
     }
 
@@ -63,8 +63,8 @@ public class PatientTable {
                                                               existingPatient.getAge(), patientAge,
                                                               existingPatient.getGender(), patientGender));
             }
-        } catch (IllegalStateException ise) {
-            assert(String.format("Patient with id %s does not exist.", patientId).equals(ise.getMessage()));
+        } catch (IllegalArgumentException iae) {
+            assert(String.format("Patient with id %s does not exist.", patientId).equals(iae.getMessage()));
         }
 
         table.put(new PatientId(patientId), new Patient(patientId, patientName, patientAge, patientGender));

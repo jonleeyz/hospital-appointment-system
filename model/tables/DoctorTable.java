@@ -33,13 +33,13 @@ public class DoctorTable {
 
     /**
      * Verifies that the details provided are consistent with the Doctor in the table.
-     * - @throws IllegalStateException if no Doctor object with DoctorId doctorId exists.
+     * - @throws IllegalArgumentException if no Doctor object with DoctorId doctorId exists.
      */
-    public boolean verifyRecord(String doctorId, String doctorName) throws IllegalStateException {
+    public boolean verifyRecord(String doctorId, String doctorName) throws IllegalArgumentException {
         if (contains(doctorId)) {
             return get(doctorId).equals(new Doctor(doctorId, doctorName));
         } else {
-            throw new IllegalStateException(String.format("Doctor with id %s does not exist.", doctorId));
+            throw new IllegalArgumentException(String.format("Doctor with id %s does not exist.", doctorId));
         }
     }
 
@@ -57,8 +57,8 @@ public class DoctorTable {
                                                                           "with different details: name (%s:%s)"),
                                                               doctorId, existingDoctor.getName(), doctorName));
             }
-        } catch (IllegalStateException ise) {
-            assert(String.format("Doctor with id %s does not exist.", doctorId).equals(ise.getMessage()));
+        } catch (IllegalArgumentException iae) {
+            assert(String.format("Doctor with id %s does not exist.", doctorId).equals(iae.getMessage()));
         }
 
         table.put(new DoctorId(doctorId), new Doctor(doctorId, doctorName));

@@ -32,10 +32,10 @@ class DoctorTableUnitTest {
         table.put(doctorId1, doctorName1);
         assertTrue(table.verifyRecord(doctorId1, doctorName1));
         assertFalse(table.verifyRecord(doctorId1, doctorName2));
-        Exception e1 = assertThrows(IllegalStateException.class,
+        Exception e1 = assertThrows(IllegalArgumentException.class,
                                     () -> table.verifyRecord(doctorId2, doctorName1));
         assertEquals(String.format("Doctor with id %s does not exist.", doctorId2), e1.getMessage());
-        Exception e2 = assertThrows(IllegalStateException.class,
+        Exception e2 = assertThrows(IllegalArgumentException.class,
                                     () -> table.verifyRecord(doctorId2, doctorName2));
         assertEquals(String.format("Doctor with id %s does not exist.", doctorId2), e2.getMessage());
 
@@ -43,12 +43,12 @@ class DoctorTableUnitTest {
         assertTrue(table.verifyRecord(doctorId2, doctorName2));
         assertFalse(table.verifyRecord(doctorId2, doctorName1));
         String doctorId3 = "D3";
-        Exception e3 = assertThrows(IllegalStateException.class,
+        Exception e3 = assertThrows(IllegalArgumentException.class,
                                     () -> table.verifyRecord(doctorId3, doctorName1));
-        assertEquals(String.format("Doctor with DoctorId %s does not exist.", doctorId3), e3.getMessage());
-        Exception e4 = assertThrows(IllegalStateException.class,
+        assertEquals(String.format("Doctor with id %s does not exist.", doctorId3), e3.getMessage());
+        Exception e4 = assertThrows(IllegalArgumentException.class,
                                     () -> table.verifyRecord(doctorId3, doctorName2));
-        assertEquals(String.format("Doctor with DoctorId %s does not exist.", doctorId3), e4.getMessage());
+        assertEquals(String.format("Doctor with id %s does not exist.", doctorId3), e4.getMessage());
     }
 
     @Test
