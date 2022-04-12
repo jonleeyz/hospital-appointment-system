@@ -57,8 +57,8 @@ public class AppointmentTable {
                                                             "patientId (%s:%s), doctorId (%s:%s),",
                                                             "date (%s:%s), time (%s:%s)"),
                                                 appointmentId,
-                                                existingAppointment.getDoctorId(), doctorId,
                                                 existingAppointment.getPatientId(), patientId,
+                                                existingAppointment.getDoctorId(), doctorId,
                                                 DateTimeParser.convertToString(existingAppointment.getDate()), date,
                                                 DateTimeParser.convertToString(existingAppointment.getTime()), time));
             }
