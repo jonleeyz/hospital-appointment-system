@@ -59,8 +59,8 @@ public class AppointmentTable {
                                                 appointmentId,
                                                 existingAppointment.getPatientId(), patientId,
                                                 existingAppointment.getDoctorId(), doctorId,
-                                                DateTimeParser.convertToString(existingAppointment.getDate()), date,
-                                                DateTimeParser.convertToString(existingAppointment.getTime()), time));
+                                                DateTimeParser.toString(existingAppointment.getDate()), date,
+                                                DateTimeParser.toString(existingAppointment.getTime()), time));
             }
         } catch (IllegalArgumentException iae) {
             assert(String.format("Appointment with id %s does not exist.", appointmentId).equals(iae.getMessage()));

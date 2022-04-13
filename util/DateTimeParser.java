@@ -32,19 +32,23 @@ public class DateTimeParser {
         return true;
     }
 
-    public static LocalDate parseToDate(String date) throws DateTimeParseException {
-        return LocalDate.parse(date, DATE_FORMATTER);
+    /**
+     * @throws IllegalArgumentException if the specified date is invalid.
+     * @see DateTimeParser.verifyDateisValid
+     */
+    public static LocalDate parseToDate(String date) throws DateTimeParseException, IllegalArgumentException {
+        return verifyDateIsValid(LocalDate.parse(date, DATE_FORMATTER));
     }
 
     public static LocalTime parseToTime(String time) throws DateTimeParseException {
         return LocalTime.parse(time, TIME_FORMATTER);
     }
     
-    public static String convertToString(LocalDate date) throws DateTimeException {
+    public static String toString(LocalDate date) throws DateTimeException {
         return date.format(DATE_FORMATTER);
     }
 
-    public static String convertToString(LocalTime time) throws DateTimeException {
+    public static String toString(LocalTime time) throws DateTimeException {
         return time.format(TIME_FORMATTER);
     }
 
