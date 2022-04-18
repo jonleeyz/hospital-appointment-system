@@ -4,7 +4,6 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -23,6 +22,7 @@ class AppointmentUnitTest {
     private final String time1Raw = "09:00:00";
     private final Appointment appointment1 = new Appointment(appointment1Id, patient1Id, doctor1Id,
                                                              date1Raw, time1Raw);
+    // TODO: standardize test cases with DateTimeParserUnitTest
 
     @Test
     void constructorWorksCorrectlyTest() {
@@ -37,14 +37,14 @@ class AppointmentUnitTest {
     @ParameterizedTest
     @ValueSource(strings = { "32032018", "00032018", "08132018", "08002018" })
     void constructorFailsCorrectlyOnInvalidlyFormattedDateTest(String unparseableDate) {
-        assertThrows(DateTimeException.class,
+        assertThrows(IllegalArgumentException.class,
                      () -> new Appointment(appointment1Id, patient1Id, doctor1Id, unparseableDate, time1Raw));
     }
 
     @ParameterizedTest
     @ValueSource(strings = { "", "random string", "08/03/2018", "080318", "8 Jul 2018", "8 July 2018" })
     void constructorFailsCorrectlyOnUnparseableStringDateTest(String unparseableDate) {
-        assertThrows(DateTimeException.class,
+        assertThrows(IllegalArgumentException.class,
                      () -> new Appointment(appointment1Id, patient1Id, doctor1Id, unparseableDate, time1Raw));
     }
 
@@ -59,7 +59,7 @@ class AppointmentUnitTest {
     @ParameterizedTest
     @ValueSource(strings = { "09:60:00", "09:00:60", "24:01:00", "25:00:00" })
     void constructorFailsCorrectlyOnInvalidlyFormattedTimeTest(String unparseableTime) {
-        assertThrows(DateTimeException.class,
+        assertThrows(IllegalArgumentException.class,
                      () -> new Appointment(appointment1Id, patient1Id, doctor1Id, date1Raw, unparseableTime));
     }
 
@@ -67,7 +67,7 @@ class AppointmentUnitTest {
     @ValueSource(strings = { "", "random string", "09.00.00", "09,00,00", "09 00 00", "09:00", "09.00", "9 pm",
                              "9.00 pm", "9:00 pm", "009:00:00" })
     void constructorFailsCorrectlyOnUnparseableStringTimeTest(String unparseableTime) {
-        assertThrows(DateTimeException.class,
+        assertThrows(IllegalArgumentException.class,
                      () -> new Appointment(appointment1Id, patient1Id, doctor1Id, date1Raw, unparseableTime));
     }
 
