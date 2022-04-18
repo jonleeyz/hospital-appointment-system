@@ -47,8 +47,17 @@ public class IndexedAppointmentTable<T extends Id> {
         }
     }
 
+    /**
+     * Returns all AppointmentIds corresponding to the specified id and date.
+     * @throws NoSuchElementException if the specified is not registed in the table.
+     */
     public HashMap<LocalTime, AppointmentId> getAll(T id, LocalDate date) {
-        return table.get(id).get(date);
+        try {
+            HashMap<LocalTime, AppointmentId> result = table.get(id).get(date);
+            return result != null ? result : new HashMap<LocalTime, AppointmentId>();
+        } catch (NullPointerException npe) {
+            throw new NoSuchElementException(String.format("No record of id %s in table.", id));
+        }
     }
 
     public void add(T id, LocalDate date, LocalTime time, AppointmentId appointmentId) {
@@ -73,7 +82,7 @@ public class IndexedAppointmentTable<T extends Id> {
                 return;
             } 
         } catch (NoSuchElementException nsee) {
-        }
+        } catch (NullPointerException npe) {}
         throw new NoSuchElementException(String.format(String.join(" ",
                                                                    "No matching Appointment for given parameters:",
                                                                    "id %s, date %s, time %s, AppointmentId %s"),
