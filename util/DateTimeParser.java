@@ -71,12 +71,20 @@ public class DateTimeParser {
      * @throws IllegalArgumentException if the specified date is invalid.
      * @see DateTimeParser.verifyDateisValid
      */
-    public static LocalDate parseToDate(String date) throws DateTimeParseException, IllegalArgumentException {
-        return verifyDateIsValid(LocalDate.parse(date, DATE_FORMATTER));
+    public static LocalDate parseToDate(String date) throws IllegalArgumentException {
+        try {
+            return verifyDateIsValid(LocalDate.parse(date, DATE_FORMATTER));
+        } catch (DateTimeParseException dtpe) {
+            throw new IllegalArgumentException(String.format("String %s cannot be parsed as date.", date));
+        }
     }
 
-    public static LocalTime parseToTime(String time) throws DateTimeParseException {
-        return LocalTime.parse(time, TIME_FORMATTER);
+    public static LocalTime parseToTime(String time) throws IllegalArgumentException {
+        try {
+            return LocalTime.parse(time, TIME_FORMATTER);
+        } catch (DateTimeParseException dtpe) {
+            throw new IllegalArgumentException(String.format("String %s cannot be parsed as time.", time));
+        }
     }
     
     public static String toString(LocalDate date) throws DateTimeException {
