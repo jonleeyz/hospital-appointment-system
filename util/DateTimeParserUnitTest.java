@@ -11,7 +11,6 @@ import java.time.LocalTime;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -21,7 +20,7 @@ class DateTimeParserUnitTest {
     // valid dates
     private static final String date1Raw = "18032018";
     private static final String date2Raw = "12122012";
-    private static final String date3Raw = "111111";
+    private static final String date3Raw = "11112011";
     private static final String dateFeb29LeapYearRaw = "29022000";
     private static final LocalDate date1 = LocalDate.of(2018, 3, 18);
     private static final LocalDate date2 = LocalDate.of(2012, 12, 12);
@@ -156,7 +155,7 @@ class DateTimeParserUnitTest {
     @ParameterizedTest
     @ValueSource(strings = { time1Raw, time2Raw, time3Raw })
     void isParseableAsTimeWorksCorrectlyForParseableTimes(String parseableTime) {
-        assertTrue(DateTimeParser.isParseableAsDate(parseableTime));
+        assertTrue(DateTimeParser.isParseableAsTime(parseableTime));
     }
 
     @ParameterizedTest

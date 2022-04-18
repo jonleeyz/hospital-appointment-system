@@ -17,7 +17,7 @@ public class DateTimeParser {
     public static boolean isParseableAsDate(String date) {
         try {
             parseToDate(date);
-        } catch (DateTimeParseException dtpe) {
+        } catch (IllegalArgumentException iae) {
             return false;
         }
         return true;
@@ -26,7 +26,7 @@ public class DateTimeParser {
     public static boolean isParseableAsTime(String time) {
         try {
             parseToTime(time);
-        } catch (DateTimeParseException dtpe) {
+        } catch (IllegalArgumentException iae) {
             return false;
         }
         return true;
