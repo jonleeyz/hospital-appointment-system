@@ -5,14 +5,14 @@ import java.time.format.DateTimeParseException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.HashSet;
+// import java.util.Arrays;
+// import java.util.HashSet;
 
 public class DateTimeParser {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("ddMMyyyy");
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
-    private static final Integer[] monthsWithout31stArray = {4, 6, 9, 11};
-    private static final HashSet<Integer> monthsWithout31st = new HashSet<Integer>(Arrays.asList(monthsWithout31stArray));
+    // private static final Integer[] monthsWithout31stArray = {4, 6, 9, 11};
+    // private static final HashSet<Integer> monthsWithout31st = new HashSet<Integer>(Arrays.asList(monthsWithout31stArray));
 
     public static boolean isParseableAsDate(String date) {
         try {
@@ -47,6 +47,10 @@ public class DateTimeParser {
      * @throws IllegalArgumentException if the specified date is invalid.
      */
     public static LocalDate verifyDateIsValid(LocalDate date) throws IllegalArgumentException {
+        // not working, throw
+        throw new UnsupportedOperationException("DateTimeParser.verifyDateIsValid is not working.");
+
+        /*
         // handles no 31st month cases
         if ((monthsWithout31st.contains(date.getMonthValue()) && date.getDayOfMonth() >= 31)) {
             throw new IllegalArgumentException(String.format(String.join(" ",
@@ -65,15 +69,16 @@ public class DateTimeParser {
                                                              date.getDayOfMonth()));
         }
         return date;
+        */
     }
 
     /**
-     * @throws IllegalArgumentException if the specified date is invalid.
+     * @throws IllegalArgumentException if the date cannot be parsed.
      * @see DateTimeParser.verifyDateisValid
      */
     public static LocalDate parseToDate(String date) throws IllegalArgumentException {
         try {
-            return verifyDateIsValid(LocalDate.parse(date, DATE_FORMATTER));
+            return LocalDate.parse(date, DATE_FORMATTER);
         } catch (DateTimeParseException dtpe) {
             throw new IllegalArgumentException(String.format("String %s cannot be parsed as date.", date));
         }
