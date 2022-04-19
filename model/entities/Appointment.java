@@ -3,8 +3,6 @@ package model.entities;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
-import java.util.HashSet;
 
 import model.entities.id.AppointmentId;
 import model.entities.id.DoctorId;
