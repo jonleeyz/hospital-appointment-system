@@ -2,6 +2,7 @@ package model.entities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -12,8 +13,6 @@ import model.entities.id.PatientId;
 import util.DateTimeParser;
 
 public final class Appointment {
-    private static final Integer[] monthsWithout31stArray = {4, 6, 9, 11};
-    private static final HashSet<Integer> monthsWithout31st = new HashSet<Integer>(Arrays.asList(monthsWithout31stArray));
     
     private AppointmentId appointmentId;
     private PatientId patientId;
@@ -22,40 +21,14 @@ public final class Appointment {
     private LocalTime time;
     private int duration;
 
-    /**
-     * - @throws IllegalArgumentException if a created Date object specifies day 31 with a month that does not have
-     *   the 31st.
-     * - @throws IllegalArgumentException if a Created Date object specifies day 29 or above with month 2; adjusted
-     *   for leap years.
-     */
     public Appointment(String appointmentId, String patientId, String doctorId, String date, String time)
-        throws IllegalArgumentException {
+        throws DateTimeParseException, IllegalArgumentException {
         this.appointmentId = new AppointmentId(appointmentId);
         this.patientId = new PatientId(patientId);
         this.doctorId = new DoctorId(doctorId);
         this.date = DateTimeParser.parseToDate(date);
         this.time = DateTimeParser.parseToTime(time);
         this.duration = 60;
-        
-        // not working
-        // handles invalid Dates: months that have no 31st
-        if ((monthsWithout31st.contains(this.date.getMonthValue()) && this.date.getDayOfMonth() == 31)) {
-            throw new IllegalArgumentException(String.format(String.join(" ",
-                                                                         "Parsed date is invalid: Invalid value for",
-                                                                         "DayOfMonth when MonthOfYear is %d: %d"),
-                                                             this.date.getMonthValue(), this.date.getDayOfMonth()));
-        }
-        // not working
-        // handles invalid Dates: February, for leap and normal years
-        if ((this.date.getMonthValue() == 2) &&
-            ((this.date.getYear() % 4 == 0 && this.date.getDayOfMonth() > 29) ||
-             (this.date.getYear() % 4 == 1 && this.date.getDayOfMonth() > 28))) {
-            throw new IllegalArgumentException(String.format(String.join(" ",
-                                                                         "Parsed date is invalid: Invalid value for",
-                                                                         "DayOfMonth when MonthOfYear is %d: %d"),
-                                                             this.date.getMonthValue(), this.date.getDayOfMonth()));
-                
-        }
     }
 
     public AppointmentId getAppointmentId() {
