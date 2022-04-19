@@ -14,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
-// import org.junit.jupiter.api.MethodOrderer;
-// import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import model.entities.id.DoctorId;
 import model.entities.id.AppointmentId;
 import util.DateTimeParser;
 
-// @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class IndexedAppointmentTableUnitTest {
     private static IndexedAppointmentTable<DoctorId> doctorTable;
     private static final DoctorId d1 = new DoctorId("D1");
